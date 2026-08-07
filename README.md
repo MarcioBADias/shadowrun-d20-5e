@@ -1,4 +1,4 @@
-![](ui/official/banner-character-dark.jpg)
+![](https://raw.githubusercontent.com/MarcioBADias/shadowrun-d20-5e/main/ui/official/banner-character-dark.jpg)
 
 # Shadowrun D20 (5th Edition Adapt)
 
