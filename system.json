@@ -13,7 +13,7 @@
     }
   ],
   "esmodules": ["shadowrun-d20.js"],
-  "styles": ["shadowrun-d20.css"],
+  "styles": ["styles/shadowrun-d20.css"],
   "packs": [],
   "url": "https://github.com/MarcioBADias/shadowrun-d20-5e",
   "manifest": "https://raw.githubusercontent.com/MarcioBADias/shadowrun-d20-5e/main/system.json",
