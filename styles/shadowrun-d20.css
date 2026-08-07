@@ -141,3 +141,50 @@
 .dnd5e.sheet.actor .editor-content {
   background: rgba(4, 7, 15, 0.85);
 }
+
+/* Limpeza de Neon e Efeitos Luminosos */
+.shadowrun-d20,
+.window-app .window-content {
+  background: #111827; /* Dark limpo/slate sem brilhos */
+  color: #e5e7eb;
+  font-family: "Roboto", "Signika", sans-serif;
+  border: 1px solid #374151;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+/* Remover gradientes e brilhos neon dos blocos */
+.shadowrun-d20 .ability-card,
+.shadowrun-d20 .header-box,
+.shadowrun-d20 .resource-block {
+  background: #1f2937;
+  border: 1px solid #4b5563;
+  border-radius: 4px;
+  box-shadow: none !important;
+}
+
+/* Títulos limpos e legíveis */
+.shadowrun-d20 h1,
+.shadowrun-d20 h2,
+.shadowrun-d20 h3 {
+  color: #38bdf8; /* Ciano fosco e legível */
+  border-bottom: 1px solid #374151;
+  text-transform: uppercase;
+  font-weight: 600;
+  text-shadow: none;
+}
+
+/* Tabela de Perícias e Campos de Texto */
+.shadowrun-d20 input[type="text"],
+.shadowrun-d20 input[type="number"],
+.shadowrun-d20 select {
+  background: #111827;
+  color: #f3f4f6;
+  border: 1px solid #4b5563;
+  border-radius: 3px;
+}
+
+.shadowrun-d20 input:focus {
+  border-color: #38bdf8;
+  box-shadow: 0 0 2px #38bdf8;
+}

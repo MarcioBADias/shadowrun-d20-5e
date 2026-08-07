@@ -1,20 +1,144 @@
-<form class="{{cssClass}} flexcol limited" autocomplete="off">
+<form class="{{cssClass}} shadowrun-d20" autocomplete="off">
 
-    {{!-- Sheet Header --}}
-    <header class="sheet-header flexrow">
-        <img class="profile" src="{{actor.img}}" data-tooltip="{{actor.name}}" data-edit="img"/>
-
-        <section class="header-details flexrow">
+    <!-- CABEÇALHO -->
+    <header class="sheet-header">
+        <img
+            class="profile-img"
+            src="{{actor.img}}"
+            data-edit="img"
+            title="{{actor.name}}"
+        />
+        <div class="header-fields">
             <h1 class="charname">
-                <input name="name" type="text" value="{{actor.name}}" placeholder="{{ localize 'DND5E.Name' }}"/>
+                <input
+                    name="name"
+                    type="text"
+                    value="{{actor.name}}"
+                    placeholder="Nome do Personagem"
+                />
             </h1>
-        </section>
+
+            <div class="grid grid-4col">
+                <div>
+                    <label>CLASSE</label>
+                    <input
+                        type="text"
+                        name="system.detalhes.classe"
+                        value="{{system.detalhes.classe}}"
+                    />
+                </div>
+                <div>
+                    <label>METATIPO</label>
+                    <input
+                        type="text"
+                        name="system.detalhes.metatipo"
+                        value="{{system.detalhes.metatipo}}"
+                    />
+                </div>
+                <div>
+                    <label>ANTECEDENTE</label>
+                    <input
+                        type="text"
+                        name="system.detalhes.antecedente"
+                        value="{{system.detalhes.antecedente}}"
+                    />
+                </div>
+                <div>
+                    <label>NÍVEL</label>
+                    <input
+                        type="number"
+                        name="system.detalhes.nivel"
+                        value="{{system.detalhes.nivel}}"
+                    />
+                </div>
+            </div>
+        </div>
     </header>
 
-    {{!-- Sheet Body --}}
-    <section class="sheet-body">
-        <div class="tab biography">
-            {{editor biographyHTML target="system.details.biography.value" button=true editable=editable}}
+    <!-- BARRA DE RECURSOS E INICIATIVAS -->
+    <section class="resources-bar grid grid-6col my-2">
+        <div class="resource-block">
+            <label>PV ATUAIS</label>
+            <input
+                type="number"
+                name="system.recursos.pv.value"
+                value="{{system.recursos.pv.value}}"
+            />
+        </div>
+        <div class="resource-block">
+            <label>PV MÁX.</label>
+            <input
+                type="number"
+                name="system.recursos.pv.max"
+                value="{{system.recursos.pv.max}}"
+            />
+        </div>
+        <div class="resource-block">
+            <label>CA</label>
+            <input
+                type="number"
+                name="system.recursos.ca"
+                value="{{system.recursos.ca}}"
+            />
+        </div>
+        <div class="resource-block">
+            <label>ESSÊNCIA</label>
+            <input
+                type="number"
+                name="system.recursos.essencia"
+                value="{{system.recursos.essencia}}"
+                step="0.1"
+            />
+        </div>
+        <div class="resource-block">
+            <label>INIC. ASTRAL</label>
+            <input
+                type="number"
+                name="system.recursos.iniciativa.astral"
+                value="{{system.recursos.iniciativa.astral}}"
+            />
+        </div>
+        <div class="resource-block">
+            <label>INIC. MATRIX</label>
+            <input
+                type="number"
+                name="system.recursos.iniciativa.matrix"
+                value="{{system.recursos.iniciativa.matrix}}"
+            />
         </div>
     </section>
+
+    <!-- ATRIBUTOS BASE -->
+    <section class="abilities-grid grid grid-6col my-2">
+        {{#each system.atributos as |ability key|}}
+            <div class="ability-card" data-ability="{{key}}">
+                <h3 class="ability-name">{{key}}</h3>
+                <input
+                    type="number"
+                    name="system.atributos.{{key}}.value"
+                    value="{{ability.value}}"
+                />
+                <span class="ability-mod">{{numberFormat
+                        ability.mod
+                        decimals=0
+                        sign=true
+                    }}</span>
+            </div>
+        {{/each}}
+    </section>
+
+    <!-- ABA DE NAVEGAÇÃO -->
+    <nav class="sheet-tabs tabs" data-group="primary">
+        <a class="item" data-tab="pericias">PERÍCIAS</a>
+        <a class="item" data-tab="inventario">INVENTÁRIO / CIBERNÉTICOS</a>
+        <a class="item" data-tab="biografia">BIOGRAFIA</a>
+    </nav>
+
+    <!-- CONTEÚDO DAS ABAS -->
+    <section class="sheet-body">
+        <div class="tab pericias" data-group="primary" data-tab="pericias">
+            {{! Tabela de Perícias montada automaticamente pelo JS }}
+        </div>
+    </section>
+
 </form>
