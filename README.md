@@ -1,13 +1,13 @@
-![](https://github.com/foundryvtt/dnd5e/blob/master/ui/official/dnd5e-repo.jpg?raw=true)
+![](ui/official/banner-character-dark.jpg)
 
-# Foundry Virtual Tabletop - Dungeons & Dragons Fifth Edition Game System
+# Shadowrun D20 (5th Edition Adapt)
 
-This game system for [Foundry Virtual Tabletop](http://foundryvtt.com) provides character sheet and game system
-support for the Fifth Edition of the world's most popular roleplaying game.
+Este sistema adapta as regras de Shadowrun para funcionar dentro do Foundry Virtual Tabletop usando a base do
+Dungeons & Dragons 5ª Edição. A ficha foi redesenhada para trazer uma estética neon/cyberpunk e recursos de jogo
+compatíveis com o universo de Shadowrun em um ambiente de D&D 5e.
 
-This system provides character sheet support for Actors and Items, mechanical support for dice and rules necessary to
-play games of Fifth Edition, and compendium content for Monsters, Heroes, Items, Spells, Class Features, Monster
-Features, and more!
+O sistema oferece suporte para Atores, Itens, rolagens, classes, perícias e mecânicas relacionadas à adaptação de
+Shadowrun para o motor de jogo 5e.
 
 ## Licenses
 
@@ -35,6 +35,7 @@ may do this by cloning the repository or downloading a zip archive from the
 [Releases Page](https://github.com/foundryvtt/dnd5e/releases).
 
 ## Frequently Asked Questions
+
 Check the [Wiki](../../wiki) for answers to our most [frequently asked questions](../../wiki/faq)
 
 ## Community Contribution

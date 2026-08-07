@@ -284,13 +284,15 @@
   "media": [
     {
       "type": "cover",
+      "url": "ui/official/banner-character-dark.jpg",
+      "thumbnail": "ui/official/banner-character-dark.jpg",
       "loop": false,
       "flags": {}
     },
     {
       "type": "setup",
-      "url": "systems/dnd5e/ui/official/dnd5e-repo.jpg",
-      "thumbnail": "systems/dnd5e/ui/official/dnd5e-thumbnail.jpg"
+      "url": "ui/official/banner-character-dark.jpg",
+      "thumbnail": "ui/official/banner-character-dark.jpg"
     }
   ],
   "socket": true,
@@ -299,7 +301,7 @@
     "units": "ft"
   },
   "primaryTokenAttribute": "attributes.hp",
-  "background": "systems/dnd5e/ui/official/dnd5e-background.webp",
+  "background": "ui/official/banner-character-dark.jpg",
   "flags": {
     "compendiumArtMappings": {
       "dnd5e": {
