@@ -1,0 +1,56 @@
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap");
+
+/* Fundo escuro e tipografia futurista */
+.dnd5e.sheet.actor {
+  background: #090d16;
+  color: #c9d1d9;
+  font-family: "Orbitron", "Roboto", sans-serif;
+}
+
+.dnd5e.sheet.actor .window-content {
+  background: linear-gradient(135deg, #0b1020 0%, #111827 100%);
+}
+
+/* Bordas e brilho neon ciano para os blocos */
+.dnd5e.sheet.actor .attribute,
+.dnd5e.sheet.actor .ability-scores .ability,
+.dnd5e.sheet.actor .resource,
+.dnd5e.sheet.actor .sheet-header-fields input,
+.dnd5e.sheet.actor input,
+.dnd5e.sheet.actor select,
+.dnd5e.sheet.actor textarea {
+  background: #0f172a;
+  border: 1px solid #00f0ff;
+  box-shadow: 0 0 8px rgba(0, 240, 255, 0.2);
+  border-radius: 4px;
+  color: #f8fafc;
+}
+
+/* Títulos e destaques em ciano */
+.dnd5e.sheet.actor h2,
+.dnd5e.sheet.actor .mod,
+.dnd5e.sheet.actor .sheet-header-fields label,
+.dnd5e.sheet.actor .resource label {
+  color: #00f0ff;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* Marcadores de proficiência (quadrados rosa/magenta) */
+.dnd5e.sheet.actor .proficiency-toggle.active {
+  background-color: #ff0055;
+  box-shadow: 0 0 6px #ff0055;
+}
+
+/* Melhorias visuais para inputs e botões */
+.dnd5e.sheet.actor button,
+.dnd5e.sheet.actor .unbutton {
+  border: 1px solid #00f0ff;
+  background: #111827;
+  color: #00f0ff;
+}
+
+.dnd5e.sheet.actor button:hover,
+.dnd5e.sheet.actor .unbutton:hover {
+  box-shadow: 0 0 8px rgba(0, 240, 255, 0.35);
+}

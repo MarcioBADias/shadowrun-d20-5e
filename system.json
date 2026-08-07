@@ -1,28 +1,23 @@
 {
-  "id": "dnd5e",
-  "title": "Dungeons & Dragons Fifth Edition",
-  "description": "A system for playing the fifth edition of the world's most popular role-playing game in the Foundry Virtual Tabletop environment.",
-  "version": "6.0.0",
+  "id": "shadowrun-d20-5e",
+  "title": "Shadowrun D20 (5th Edition Adapt)",
+  "description": "Sistema de RPG Shadowrun adaptado para as regras do D&D 5e.",
+  "version": "1.0.0",
   "compatibility": {
-    "minimum": "14.359",
-    "verified": "14"
+    "minimum": "11",
+    "verified": "12"
   },
-  "url": "https://github.com/foundryvtt/dnd5e/",
-  "manifest": "https://raw.githubusercontent.com/foundryvtt/dnd5e/master/system.json",
-  "download": "https://github.com/foundryvtt/dnd5e/releases/download/release-6.0.0/dnd5e-release-6.0.0.zip",
   "authors": [
     {
-      "name": "Atropos",
-      "url": "https://foundryvtt.com",
-      "flags": {}
+      "name": "Marcio Breno"
     }
   ],
-  "esmodules": [
-    "dnd5e.mjs"
-  ],
-  "styles": [
-    "dnd5e.css"
-  ],
+  "esmodules": ["shadowrun-d20.js"],
+  "styles": ["shadowrun-d20.css"],
+  "packs": [],
+  "url": "https://github.com/MarcioBADias/shadowrun-d20-5e",
+  "manifest": "https://raw.githubusercontent.com/MarcioBADias/shadowrun-d20-5e/main/system.json",
+  "download": "https://github.com/MarcioBADias/shadowrun-d20-5e/archive/refs/heads/main.zip",
   "documentTypes": {
     "ActiveEffect": {
       "condition": {},
@@ -30,7 +25,11 @@
     },
     "Actor": {
       "character": {
-        "htmlFields": ["details.biography.value", "details.biography.public", "bastion.description"]
+        "htmlFields": [
+          "details.biography.value",
+          "details.biography.public",
+          "bastion.description"
+        ]
       },
       "encounter": {
         "htmlFields": ["description.full", "description.summary"]
@@ -116,7 +115,10 @@
           "activities.*.img": ["IMAGE"]
         },
         "htmlFields": [
-          "activities.*.description.value", "description.value", "description.chat", "unidentified.description"
+          "activities.*.description.value",
+          "description.value",
+          "description.chat",
+          "unidentified.description"
         ]
       },
       "equipment": {
@@ -124,7 +126,10 @@
           "activities.*.img": ["IMAGE"]
         },
         "htmlFields": [
-          "activities.*.description.value", "description.value", "description.chat", "unidentified.description"
+          "activities.*.description.value",
+          "description.value",
+          "description.chat",
+          "unidentified.description"
         ]
       },
       "consumable": {
@@ -132,7 +137,10 @@
           "activities.*.img": ["IMAGE"]
         },
         "htmlFields": [
-          "activities.*.description.value", "description.value", "description.chat", "unidentified.description"
+          "activities.*.description.value",
+          "description.value",
+          "description.chat",
+          "unidentified.description"
         ]
       },
       "tool": {
@@ -140,60 +148,104 @@
           "activities.*.img": ["IMAGE"]
         },
         "htmlFields": [
-          "activities.*.description.value", "description.value", "description.chat", "unidentified.description"
+          "activities.*.description.value",
+          "description.value",
+          "description.chat",
+          "unidentified.description"
         ]
       },
       "loot": {
-        "htmlFields": ["description.value", "description.chat", "unidentified.description"]
+        "htmlFields": [
+          "description.value",
+          "description.chat",
+          "unidentified.description"
+        ]
       },
       "race": {
         "filePathFields": {
           "advancement.*.icon": ["IMAGE"]
         },
-        "htmlFields": ["advancement.*.hint", "description.value", "description.chat"]
+        "htmlFields": [
+          "advancement.*.hint",
+          "description.value",
+          "description.chat"
+        ]
       },
       "background": {
         "filePathFields": {
           "advancement.*.icon": ["IMAGE"]
         },
-        "htmlFields": ["advancement.*.hint", "description.value", "description.chat"]
+        "htmlFields": [
+          "advancement.*.hint",
+          "description.value",
+          "description.chat"
+        ]
       },
       "class": {
         "filePathFields": {
           "advancement.*.icon": ["IMAGE"]
         },
-        "htmlFields": ["advancement.*.hint", "description.value", "description.chat"]
+        "htmlFields": [
+          "advancement.*.hint",
+          "description.value",
+          "description.chat"
+        ]
       },
       "subclass": {
         "filePathFields": {
           "advancement.*.icon": ["IMAGE"]
         },
-        "htmlFields": ["advancement.*.hint", "description.value", "description.chat"]
+        "htmlFields": [
+          "advancement.*.hint",
+          "description.value",
+          "description.chat"
+        ]
       },
       "spell": {
         "filePathFields": {
           "activities.*.img": ["IMAGE"]
         },
-        "htmlFields": ["activities.*.description.value", "description.value", "description.chat"]
+        "htmlFields": [
+          "activities.*.description.value",
+          "description.value",
+          "description.chat"
+        ]
       },
       "feat": {
         "filePathFields": {
           "activities.*.img": ["IMAGE"],
           "advancement.*.icon": ["IMAGE"]
         },
-        "htmlFields": ["activities.*.description.value", "advancement.*.hint", "description.value", "description.chat"]
+        "htmlFields": [
+          "activities.*.description.value",
+          "advancement.*.hint",
+          "description.value",
+          "description.chat"
+        ]
       },
       "container": {
-        "htmlFields": ["description.value", "description.chat", "unidentified.description"]
+        "htmlFields": [
+          "description.value",
+          "description.chat",
+          "unidentified.description"
+        ]
       },
       "backpack": {
-        "htmlFields": ["description.value", "description.chat", "unidentified.description"]
+        "htmlFields": [
+          "description.value",
+          "description.chat",
+          "unidentified.description"
+        ]
       },
       "facility": {
         "filePathFields": {
           "activities.*.img": ["IMAGE"]
         },
-        "htmlFields": ["activities.*.description.value", "description.value", "description.chat"]
+        "htmlFields": [
+          "activities.*.description.value",
+          "description.value",
+          "description.chat"
+        ]
       }
     },
     "JournalEntryPage": {
@@ -260,7 +312,15 @@
       "flags": {
         "dnd5e": {
           "sourceBook": "SRD 5.1",
-          "types": ["weapon", "equipment", "consumable", "tool", "loot", "feat", "container"]
+          "types": [
+            "weapon",
+            "equipment",
+            "consumable",
+            "tool",
+            "loot",
+            "feat",
+            "container"
+          ]
         }
       }
     },
@@ -497,7 +557,15 @@
       "flags": {
         "dnd5e": {
           "sourceBook": "SRD 5.2",
-          "types": ["weapon", "equipment", "consumable", "tool", "loot", "feat", "container"]
+          "types": [
+            "weapon",
+            "equipment",
+            "consumable",
+            "tool",
+            "loot",
+            "feat",
+            "container"
+          ]
         }
       }
     },
@@ -577,11 +645,7 @@
       "name": "D&D Legacy Content",
       "sorting": "m",
       "color": "#cd2c1e",
-      "packs": [
-        "rules",
-        "tables",
-        "heroes"
-      ],
+      "packs": ["rules", "tables", "heroes"],
       "folders": [
         {
           "name": "Character Features",
@@ -599,20 +663,13 @@
           "name": "Items & Spells",
           "sorting": "m",
           "color": "#941919 ",
-          "packs": [
-            "items",
-            "spells",
-            "tradegoods"
-          ]
+          "packs": ["items", "spells", "tradegoods"]
         },
         {
           "name": "Monsters",
           "sorting": "m",
           "color": "#7d160c",
-          "packs": [
-            "monsters",
-            "monsterfeatures"
-          ]
+          "packs": ["monsters", "monsterfeatures"]
         }
       ]
     }

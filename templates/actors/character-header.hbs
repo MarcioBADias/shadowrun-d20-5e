@@ -1,71 +1,152 @@
 <header class="sheet-header">
 
-    {{!-- Name & Class --}}
-    <div class="left optional-ability-{{ abilityRows.optional }}">
+    {{! Name & Class }}
+    <div class="left optional-ability-{{abilityRows.optional}}">
 
-        {{!-- Name --}}
+        {{! Name }}
         {{#if editable}}
-        <input type="text" name="name" class="document-name uninput" value="{{ actor._source.name }}">
+            <input
+                type="text"
+                name="name"
+                class="document-name uninput"
+                value="{{actor._source.name}}"
+            />
         {{else}}
-        <div class="document-name">{{ actor.name }}</div>
+            <div class="document-name">{{actor.name}}</div>
         {{/if}}
 
-        {{!-- Class --}}
-        <div class="class roboto-upper">{{ labels.class }}</div>
+        {{! Class }}
+        <div class="class roboto-upper">{{labels.class}}</div>
+
+        <div
+            class="sheet-header-fields"
+            style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:0.5rem;"
+        >
+            <div class="resource">
+                <label class="roboto-upper">ESSÊNCIA</label>
+                <input
+                    type="text"
+                    name="system.resources.essencia.value"
+                    value="{{system.resources.essencia.value}}"
+                    class="uninput"
+                    data-dtype="Number"
+                />
+            </div>
+            <div class="resource">
+                <label class="roboto-upper">INIC. ASTRAL</label>
+                <input
+                    type="text"
+                    name="system.attributes.initAstral.total"
+                    value="{{system.attributes.initAstral.total}}"
+                    class="uninput"
+                    disabled
+                />
+            </div>
+            <div class="resource">
+                <label class="roboto-upper">INIC. MATRIX</label>
+                <input
+                    type="text"
+                    name="system.attributes.initMatrix.total"
+                    value="{{system.attributes.initMatrix.total}}"
+                    class="uninput"
+                    disabled
+                />
+            </div>
+        </div>
     </div>
 
-    {{!-- Level, Inspiration, XP, & Buttons --}}
+    {{! Level, Inspiration, XP, & Buttons }}
     <div class="right">
 
-        {{!-- Level --}}
-        <div class="level-badge badge" aria-label="{{ localize 'DND5E.LevelNumber' level=system.details.level }}">
-            {{ system.details.level }}
+        {{! Level }}
+        <div
+            class="level-badge badge"
+            aria-label="{{localize
+                'DND5E.LevelNumber'
+                level=system.details.level
+            }}"
+        >
+            {{system.details.level}}
         </div>
 
-        {{!-- Inspiration --}}
-        <button type="button" class="inspiration unbutton" data-action="toggleInspiration"
-                aria-label="{{ localize 'DND5E.Inspiration' }}" data-tooltip="DND5E.Inspiration"
-                aria-pressed="{{ system.attributes.inspiration }}"></button>
+        {{! Inspiration }}
+        <button
+            type="button"
+            class="inspiration unbutton"
+            data-action="toggleInspiration"
+            aria-label="{{localize 'DND5E.Inspiration'}}"
+            data-tooltip="DND5E.Inspiration"
+            aria-pressed="{{system.attributes.inspiration}}"
+        ></button>
 
-        {{!-- Epic Boons --}}
+        {{! Epic Boons }}
         {{#if system.details.xp.boonsEarned}}
-        <div class="boon-badge badge" data-tooltip="{{ epicBoonsEarned }}" aria-label="{{ epicBoonsEarned }}">
-            {{ dnd5e-numberFormat system.details.xp.boonsEarned numerals=true }}
-        </div>
+            <div
+                class="boon-badge badge"
+                data-tooltip="{{epicBoonsEarned}}"
+                aria-label="{{epicBoonsEarned}}"
+            >
+                {{dnd5e-numberFormat
+                    system.details.xp.boonsEarned
+                    numerals=true
+                }}
+            </div>
         {{/if}}
 
         <div>
-            {{!-- Resting & Special Traits --}}
+            {{! Resting & Special Traits }}
             {{#if showRests}}
-            <div class="sheet-header-buttons">
-                {{#each CONFIG.restTypes}}
-                <button type="button" class="{{ @key }}-rest gold-button" data-action="rest" data-type="{{ @key }}"
-                        data-tooltip aria-label="{{ localize label }}">
-                    <i class="{{ icon }}" inert></i>
-                </button>
-                {{/each}}
-            </div>
+                <div class="sheet-header-buttons">
+                    {{#each CONFIG.restTypes}}
+                        <button
+                            type="button"
+                            class="{{@key}}-rest gold-button"
+                            data-action="rest"
+                            data-type="{{@key}}"
+                            data-tooltip
+                            aria-label="{{localize label}}"
+                        >
+                            <i class="{{icon}}" inert></i>
+                        </button>
+                    {{/each}}
+                </div>
             {{/if}}
 
-            {{!-- XP --}}
+            {{! XP }}
             {{#if showExperience}}
-            {{#with system.details.xp}}
-            <div class="xp-label roboto-upper">
-                {{#if @root.editable}}
-                <input type="text" name="system.details.xp.value" class="value uninput" data-dtype="Number"
-                       value="{{ value }}">
-                {{else}}
-                <span class="value">{{ dnd5e-numberFormat value }}</span>
-                {{/if}}
-                {{#unless @root.epicBoonsEarned}}
-                <span class="separator">&sol;</span>
-                <span class="max">{{ dnd5e-numberFormat max }}</span>
-                {{/unless}}
-            </div>
-            <div class="xp-bar" role="meter" aria-label="{{ localize 'DND5E.ExperiencePoints.Progress' }}"
-                 aria-valuemin="{{ min }}" aria-valuenow="{{ value }}" aria-valuemax="{{ max }}"
-                 aria-valuetext="{{ pct }}%" style="--bar-percentage: {{ pct }}%;"></div>
-            {{/with}}
+                {{#with system.details.xp}}
+                    <div class="xp-label roboto-upper">
+                        {{#if @root.editable}}
+                            <input
+                                type="text"
+                                name="system.details.xp.value"
+                                class="value uninput"
+                                data-dtype="Number"
+                                value="{{value}}"
+                            />
+                        {{else}}
+                            <span class="value">{{dnd5e-numberFormat
+                                    value
+                                }}</span>
+                        {{/if}}
+                        {{#unless @root.epicBoonsEarned}}
+                            <span class="separator">&sol;</span>
+                            <span class="max">{{dnd5e-numberFormat max}}</span>
+                        {{/unless}}
+                    </div>
+                    <div
+                        class="xp-bar"
+                        role="meter"
+                        aria-label="{{localize
+                            'DND5E.ExperiencePoints.Progress'
+                        }}"
+                        aria-valuemin="{{min}}"
+                        aria-valuenow="{{value}}"
+                        aria-valuemax="{{max}}"
+                        aria-valuetext="{{pct}}%"
+                        style="--bar-percentage: {{pct}}%;"
+                    ></div>
+                {{/with}}
             {{/if}}
         </div>
     </div>
