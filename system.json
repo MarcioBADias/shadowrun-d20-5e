@@ -14,7 +14,6 @@
   ],
   "esmodules": ["shadowrun-d20.js"],
   "styles": ["styles/shadowrun-d20.css"],
-  "cover": "assets/cover.jpg",
   "packs": [],
   "url": "https://github.com/MarcioBADias/shadowrun-d20-5e",
   "manifest": "https://raw.githubusercontent.com/MarcioBADias/shadowrun-d20-5e/main/system.json",
@@ -285,14 +284,14 @@
   "media": [
     {
       "type": "cover",
-      "url": "ui/official/banner-character-dark.jpg",
+      "url": "assets/cover.jpg",
       "thumbnail": "ui/official/banner-character-dark.jpg",
       "loop": false,
       "flags": {}
     },
     {
       "type": "setup",
-      "url": "ui/official/banner-character-dark.jpg",
+      "url": "assets/cover.jpg",
       "thumbnail": "ui/official/banner-character-dark.jpg"
     }
   ],
@@ -302,7 +301,7 @@
     "units": "ft"
   },
   "primaryTokenAttribute": "attributes.hp",
-  "background": "ui/official/banner-character-dark.jpg",
+  "background": "assets/cover.jpg",
   "flags": {
     "compendiumArtMappings": {
       "dnd5e": {
