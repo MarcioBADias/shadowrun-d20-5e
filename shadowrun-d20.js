@@ -1,11 +1,15 @@
-import { DND5E } from "./module/config.mjs";
+import { ShadowrunActorSheet } from "./module/sheets/actor-sheet.js";
 
 Hooks.once("init", async function () {
-  console.log("Shadowrun D20 5e | Inicializando o Sistema Customizado");
+  console.log("Shadowrun D20 5e | Inicializando Sistema");
 
-  Object.assign(CONFIG.DND5E, DND5E);
-});
+  // 1. Unregistra a ficha padrão genérica do Foundry
+  Actors.unregisterSheet("core", ActorSheet);
 
-Hooks.on("ready", () => {
-  console.log("Shadowrun D20 5e | Sistema carregado com sucesso.");
+  // 2. Registra a ficha customizada do seu Shadowrun
+  Actors.registerSheet("shadowrun-d20-5e", ShadowrunActorSheet, {
+    types: ["character"],
+    makeDefault: true,
+    label: "Ficha Shadowrun D20 5e",
+  });
 });
