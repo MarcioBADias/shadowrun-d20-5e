@@ -284,8 +284,6 @@
   "media": [
     {
       "type": "cover",
-      "url": "assets/cover.png",
-      "thumbnail": "assets/cover.png",
       "loop": false,
       "flags": {}
     },
