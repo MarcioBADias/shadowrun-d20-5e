@@ -284,15 +284,15 @@
   "media": [
     {
       "type": "cover",
-      "url": "https://share.gemini.google/mKIgo5dTDuMW",
-      "thumbnail": "https://share.gemini.google/mKIgo5dTDuMW",
+      "url": "assets/cover.png",
+      "thumbnail": "assets/cover.png",
       "loop": false,
       "flags": {}
     },
     {
       "type": "setup",
-      "url": "https://share.gemini.google/mKIgo5dTDuMW",
-      "thumbnail": "https://share.gemini.google/mKIgo5dTDuMW"
+      "url": "assets/cover.png",
+      "thumbnail": "assets/cover.png"
     }
   ],
   "socket": true,
@@ -301,7 +301,7 @@
     "units": "ft"
   },
   "primaryTokenAttribute": "attributes.hp",
-  "background": "https://share.gemini.google/mKIgo5dTDuMW",
+  "background": "assets/cover.png",
   "flags": {
     "compendiumArtMappings": {
       "dnd5e": {
