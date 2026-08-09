@@ -1,13 +1,13 @@
 import { ShadowrunActorSheet } from "./sheets/actor-sheet.mjs";
 
 Hooks.once("init", async function () {
-  console.log("Shadowrun 5e24 | Inicializando Sistema");
+  console.log("Shadowrun d20 5e | Inicializando Sistema");
 
-  // Desregistra a ficha padrão e registra a do Shadowrun
+  // Registrar a Ficha Customizada
   Actors.unregisterSheet("core", ActorSheet);
-  Actors.registerSheet("shadowrun5e24", ShadowrunActorSheet, {
+  Actors.registerSheet("shadowrun-d20-5e", ShadowrunActorSheet, {
     types: ["character"],
     makeDefault: true,
-    label: "Ficha de Runner (Shadowrun 5e24)",
+    label: "Ficha de Runner (Shadowrun d20 5e)",
   });
 });

@@ -1,12 +1,13 @@
 <form class="{{cssClass}} flexcol" autocomplete="off">
-    <header class="sheet-header">
+    {{!-- Cabeçalho da Ficha --}}
+    <header class="sheet-header flexrow">
         <img
             class="profile-img"
             src="{{actor.img}}"
             data-edit="img"
             title="{{actor.name}}"
         />
-        <div class="header-fields">
+        <div class="header-fields flexcol">
             <h1 class="charname">
                 <input
                     name="name"
@@ -15,7 +16,7 @@
                     placeholder="Nome do Runner"
                 />
             </h1>
-            <div class="resources grid grid-3col">
+            <div class="resources grid grid-4col">
                 <div>
                     <label>Raça</label>
                     <input
@@ -33,103 +34,264 @@
                     />
                 </div>
                 <div>
+                    <label>Nível</label>
+                    <input
+                        type="number"
+                        name="system.level"
+                        value="{{system.level}}"
+                    />
+                </div>
+                <div>
                     <label>Essência</label>
                     <input
                         type="number"
-                        step="0.1"
+                        step="0.01"
                         name="system.essence"
                         value="{{system.essence}}"
                     />
                 </div>
             </div>
+            <div class="resources grid grid-4col margin-top-sm">
+                <div>
+                    <label>HP Atual / Máx</label>
+                    <div class="flexrow">
+                        <input
+                            type="number"
+                            name="system.current_hp"
+                            value="{{system.current_hp}}"
+                        />
+                        <span>/</span>
+                        <input
+                            type="number"
+                            name="system.max_hp"
+                            value="{{system.max_hp}}"
+                        />
+                    </div>
+                </div>
+                <div>
+                    <label>Classe de Armadura (CA)</label>
+                    <input
+                        type="number"
+                        name="system.armor_class"
+                        value="{{system.armor_class}}"
+                    />
+                </div>
+                <div>
+                    <label>Nuyen (¥)</label>
+                    <input
+                        type="number"
+                        name="system.nuyen"
+                        value="{{system.nuyen}}"
+                    />
+                </div>
+                <div>
+                    <label>Status</label>
+                    <select name="system.is_dead">
+                        <option value="false" {{#unless system.is_dead}}selected{{/unless}}>Ativo</option>
+                        <option value="true" {{#if system.is_dead}}selected{{/if}}>Morto/Inoperante</option>
+                    </select>
+                </div>
+            </div>
         </div>
     </header>
 
-    {{! Navegação de Abas }}
+    {{!-- Navegação de Abas --}}
     <nav class="sheet-tabs tabs" data-group="primary">
-        <a class="item" data-tab="stats">Atributos</a>
-        <a class="item" data-tab="cyberware">Ciberwares</a>
+        <a class="item" data-tab="stats">Atributos & Perícias</a>
         <a class="item" data-tab="inventory">Inventário</a>
+        <a class="item" data-tab="cyberware">Ciberware & Implantes</a>
+        <a class="item" data-tab="feats_spells">Talentos & Magias</a>
+        <a class="item" data-tab="notes">Anotações</a>
     </nav>
 
+    {{!-- Corpo da Ficha --}}
     <section class="sheet-body">
-        {{! Aba Atributos }}
+        {{!-- Aba Atributos & Perícias --}}
         <div class="tab stats" data-group="primary" data-tab="stats">
-            <div class="grid grid-6col">
+            <h3>Atributos Principais</h3>
+            <div class="grid grid-6col text-center">
                 <div>
-                    <label>Força</label>
+                    <label>FOR</label>
                     <input
                         type="number"
                         name="system.strength"
                         value="{{system.strength}}"
                     />
+                    <small>Bônus Origem: {{system.origin_bonuses.strength}}</small>
                 </div>
                 <div>
-                    <label>Destreza</label>
+                    <label>DES</label>
                     <input
                         type="number"
                         name="system.dexterity"
                         value="{{system.dexterity}}"
                     />
+                    <small>Bônus Origem: {{system.origin_bonuses.dexterity}}</small>
                 </div>
                 <div>
-                    <label>Constituição</label>
+                    <label>CON</label>
                     <input
                         type="number"
                         name="system.constitution"
                         value="{{system.constitution}}"
                     />
+                    <small>Bônus Origem: {{system.origin_bonuses.constitution}}</small>
                 </div>
                 <div>
-                    <label>Inteligência</label>
+                    <label>INT</label>
                     <input
                         type="number"
                         name="system.intelligence"
                         value="{{system.intelligence}}"
                     />
+                    <small>Bônus Origem: {{system.origin_bonuses.intelligence}}</small>
                 </div>
                 <div>
-                    <label>Sabedoria</label>
+                    <label>SAB</label>
                     <input
                         type="number"
                         name="system.wisdom"
                         value="{{system.wisdom}}"
                     />
+                    <small>Bônus Origem: {{system.origin_bonuses.wisdom}}</small>
                 </div>
                 <div>
-                    <label>Carisma</label>
+                    <label>CAR</label>
                     <input
                         type="number"
                         name="system.charisma"
                         value="{{system.charisma}}"
                     />
+                    <small>Bônus Origem: {{system.origin_bonuses.charisma}}</small>
                 </div>
             </div>
 
-            <div class="form-group margin-top">
-                <label>Nuyen (¥)</label>
+            <hr />
+
+            <h3>Perícias</h3>
+            <div class="form-group">
+                <label>Perícias Treinadas / Resumo</label>
                 <input
-                    type="number"
-                    name="system.nuyen"
-                    value="{{system.nuyen}}"
+                    type="text"
+                    name="system.skills"
+                    value="{{system.skills}}"
+                    placeholder="Ex: Acrobacia, Atletismo, Percepção, Furtividade"
                 />
+            </div>
+
+            <h4>Perícias Customizadas / Técnicas</h4>
+            <div class="custom-skills-list">
+                {{#each system.custom_skills}}
+                <div class="flexrow margin-bottom-sm">
+                    <input type="text" value="{{this.name}}" readonly placeholder="Nome da Perícia"/>
+                    <input type="text" value="{{this.attr}}" readonly style="max-width: 100px;" placeholder="Atributo"/>
+                    <input type="text" value="{{this.usage}}" readonly placeholder="Uso Tático"/>
+                </div>
+                {{/each}}
             </div>
         </div>
 
-        {{! Aba Ciberware }}
-        <div class="tab cyberware" data-group="primary" data-tab="cyberware">
-            <textarea
-                name="system.cyberware"
-                rows="5"
-            >{{system.cyberware}}</textarea>
+        {{!-- Aba Inventário --}}
+        <div class="tab inventory" data-group="primary" data-tab="inventory">
+            <h3>Equipamentos & Armas</h3>
+            <div class="form-group">
+                <label>Resumo de Equipamentos</label>
+                <input
+                    type="text"
+                    name="system.equipment"
+                    value="{{system.equipment}}"
+                />
+            </div>
+
+            <h4>Itens Estruturados</h4>
+            <table class="inventory-table">
+                <thead>
+                    <tr>
+                        <th>Equipado</th>
+                        <th>Nome</th>
+                        <th>Categoria</th>
+                        <th>Qtd</th>
+                        <th>Custo (¥)</th>
+                        <th>Notas / Detalhes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each system.inventory}}
+                    <tr>
+                        <td class="text-center">
+                            <input type="checkbox" {{#if this.equipped}}checked{{/if}} disabled />
+                        </td>
+                        <td>{{this.name}}</td>
+                        <td>{{this.category}}</td>
+                        <td>{{this.qty}}</td>
+                        <td>{{this.cost}}</td>
+                        <td>{{this.note}}</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
         </div>
 
-        {{! Aba Inventário }}
-        <div class="tab inventory" data-group="primary" data-tab="inventory">
+        {{!-- Aba Ciberware --}}
+        <div class="tab cyberware" data-group="primary" data-tab="cyberware">
+            <h3>Ciberware & Augmentações</h3>
+            <div class="form-group">
+                <label>Resumo de Ciberwares</label>
+                <input
+                    type="text"
+                    name="system.cyberware"
+                    value="{{system.cyberware}}"
+                />
+            </div>
+
+            <h4>Lista Detalhada de Implantes</h4>
+            {{#each system.cyberware_list}}
+            <div class="cyberware-card margin-bottom-sm p-2" style="border: 1px solid #444; border-radius: 4px;">
+                <div class="flexrow">
+                    <strong>{{this.name}}</strong>
+                    <span>Custo de Essência: {{this.essence}}</span>
+                </div>
+                <p><small>{{this.text}}</small></p>
+            </div>
+            {{/each}}
+        </div>
+
+        {{!-- Aba Talentos & Magias --}}
+        <div class="tab feats_spells" data-group="primary" data-tab="feats_spells">
+            <h3>Talentos (Feats)</h3>
+            <div class="form-group">
+                <input
+                    type="text"
+                    name="system.feats"
+                    value="{{system.feats}}"
+                    placeholder="Resumo dos Talentos"
+                />
+            </div>
+            {{#each system.feats_list}}
+            <div class="feat-card margin-bottom-sm p-2" style="border: 1px solid #444; border-radius: 4px;">
+                <strong>{{this.name}}</strong> ({{this.source}})
+                <p><small>{{this.text}}</small></p>
+            </div>
+            {{/each}}
+
+            <hr />
+
+            <h3>Magias & Habilidades Arcanas</h3>
+            {{#each system.spells}}
+            <div class="spell-card margin-bottom-sm p-2" style="border: 1px solid #444; border-radius: 4px;">
+                <strong>{{this.name}}</strong> ({{this.source}})
+                <p><small>{{this.text}}</small></p>
+            </div>
+            {{/each}}
+        </div>
+
+        {{!-- Aba Anotações --}}
+        <div class="tab notes" data-group="primary" data-tab="notes">
+            <h3>Histórico, Contatos & Dívidas</h3>
             <textarea
-                name="system.equipment"
-                rows="5"
-            >{{system.equipment}}</textarea>
+                name="system.notes"
+                rows="10"
+            >{{system.notes}}</textarea>
         </div>
     </section>
 </form>

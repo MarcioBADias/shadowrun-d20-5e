@@ -1,8 +1,7 @@
 export class ShadowrunActorSheet extends ActorSheet {
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
-      classes: ["shadowrun5e24", "sheet", "actor"],
-      // Usamos character-sheet.hbs apontando para a pasta atual do sistema
+    return foundry.utils.mergeObject(super.defaultOptions, {
+      classes: ["shadowrun-d20-5e", "sheet", "actor"],
       template: "systems/shadowrun-d20-5e/templates/actor/character-sheet.hbs",
       width: 720,
       height: 800,
