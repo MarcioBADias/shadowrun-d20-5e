@@ -3,6 +3,7 @@
   "title": "Shadowrun 5e24 (d20)",
   "description": "Sistema customizado de Shadowrun adaptado com regras d20 5e para Foundry VTT.",
   "version": "1.0.0",
+  "template": "template.json",
   "authors": [
     {
       "name": "Marcio Breno",

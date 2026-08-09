@@ -2,43 +2,125 @@
   "Actor": {
     "types": ["character", "npc"],
     "templates": {
-      "base": {
-        "atributos": {
-          "for": { "value": 10, "mod": 0, "save": 0 },
-          "des": { "value": 10, "mod": 0, "save": 0 },
-          "con": { "value": 10, "mod": 0, "save": 0 },
-          "int": { "value": 10, "mod": 0, "save": 0 },
-          "sab": { "value": 10, "mod": 0, "save": 0 },
-          "car": { "value": 10, "mod": 0, "save": 0 }
+      "baseRunner": {
+        "user_id": "",
+        "class_slug": "street-samurai",
+        "race_slug": "humano",
+        "background_slug": "mercenario",
+        "race": "Humano",
+        "background": "Mercenário",
+        "level": 1,
+        "is_dead": false,
+        "avatar_url": null,
+        "attribute_method": "free",
+        "strength": 10,
+        "dexterity": 10,
+        "constitution": 10,
+        "intelligence": 10,
+        "wisdom": 10,
+        "charisma": 10,
+        "origin_bonuses": {
+          "strength": 0,
+          "dexterity": 0,
+          "constitution": 0,
+          "intelligence": 0,
+          "wisdom": 0,
+          "charisma": 0
         },
-        "detalhes": {
-          "classe": "",
-          "metatipo": "",
-          "antecedente": "",
-          "nivel": 1,
-          "bonuseProficiencia": 2
-        },
-        "recursos": {
-          "pv": { "value": 8, "max": 8 },
-          "ca": 10,
-          "essencia": 6,
-          "iniciativa": {
-            "fisica": 0,
-            "astral": 0,
-            "matrix": 0
+        "max_hp": 10,
+        "current_hp": 10,
+        "armor_class": 10,
+        "essence": 6.0,
+        "nuyen": 0,
+        "trained_skills": [
+          "acrobacia",
+          "atletismo",
+          "percepcao",
+          "furtividade"
+        ],
+        "expertise_skills": ["furtividade"],
+        "custom_skills": [
+          {
+            "slug": "custom-pilotagem-drones",
+            "name": "Pilotagem de Drones",
+            "attr": "dexterity",
+            "usage": "Operação tática e combate com drones corporativos"
           }
-        },
-        "pericias": {}
+        ],
+        "inventory": [
+          {
+            "id": "it-exemplo1",
+            "name": "Pistola Pesada Ares Predator VI",
+            "slug": "ares-predator-vi",
+            "category": "arma",
+            "qty": 1,
+            "cost": 750,
+            "note": "Arma leve de uso tático · Dano: 1d8 perfurante",
+            "equipped": true
+          },
+          {
+            "id": "it-exemplo2",
+            "name": "Jaqueta Armaturada Tática",
+            "slug": "jaqueta-armaturada",
+            "category": "armadura",
+            "qty": 1,
+            "cost": 1200,
+            "note": "CA 13 + Bônus DES (máx 2)",
+            "equipped": true
+          }
+        ],
+        "feats_list": [
+          {
+            "id": "ft-exemplo1",
+            "slug": "reflexos-de-combate",
+            "name": "Reflexos de Combate",
+            "source": "Talentos",
+            "text": "Você ganha +2 na iniciativa e pode reagir mais rapidamente a emboscadas no mundo físico e na Matrix."
+          }
+        ],
+        "spells": [
+          {
+            "id": "sp-exemplo1",
+            "slug": "raio-de-fogo",
+            "name": "Raio de Fogo",
+            "source": "Magias",
+            "text": "Lança um feixe de energia arcana que causa 1d10 de dano de fogo num alvo a até 30 metros."
+          }
+        ],
+        "cyberware_list": [
+          {
+            "id": "cb-exemplo1",
+            "slug": "ciberolho-mk3",
+            "name": "Ciberolho Mk.III",
+            "source": "Ciberware",
+            "text": "Concede visão no escuro de 18m, HUD tático integrado e mira a laser.",
+            "essence": 0.5
+          }
+        ],
+        "skills": "Acrobacia, Atletismo, Percepção, Furtividade",
+        "feats": "Reflexos de Combate",
+        "equipment": "Pistola Pesada Ares Predator VI, Jaqueta Armaturada Tática",
+        "cyberware": "Ciberolho Mk.III (0.50)",
+        "notes": "Anotações do personagem, contatos, dívidas e histórico."
       }
     },
     "character": {
-      "templates": ["base"]
+      "templates": ["baseRunner"]
     },
     "npc": {
-      "templates": ["base"]
+      "templates": ["baseRunner"]
     }
   },
   "Item": {
-    "types": ["arma", "equipamento", "cibernetico", "magia", "talento"]
+    "types": ["item", "cyberware", "feat", "spell"],
+    "templates": {
+      "base": {
+        "description": ""
+      }
+    },
+    "item": { "templates": ["base"] },
+    "cyberware": { "templates": ["base"] },
+    "feat": { "templates": ["base"] },
+    "spell": { "templates": ["base"] }
   }
 }

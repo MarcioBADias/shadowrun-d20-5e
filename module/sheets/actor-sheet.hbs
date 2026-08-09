@@ -1,0 +1,135 @@
+<form class="{{cssClass}} flexcol" autocomplete="off">
+    <header class="sheet-header">
+        <img
+            class="profile-img"
+            src="{{actor.img}}"
+            data-edit="img"
+            title="{{actor.name}}"
+        />
+        <div class="header-fields">
+            <h1 class="charname">
+                <input
+                    name="name"
+                    type="text"
+                    value="{{actor.name}}"
+                    placeholder="Nome do Runner"
+                />
+            </h1>
+            <div class="resources grid grid-3col">
+                <div>
+                    <label>Raça</label>
+                    <input
+                        type="text"
+                        name="system.race"
+                        value="{{system.race}}"
+                    />
+                </div>
+                <div>
+                    <label>Arquétipo/Classe</label>
+                    <input
+                        type="text"
+                        name="system.class_slug"
+                        value="{{system.class_slug}}"
+                    />
+                </div>
+                <div>
+                    <label>Essência</label>
+                    <input
+                        type="number"
+                        step="0.1"
+                        name="system.essence"
+                        value="{{system.essence}}"
+                    />
+                </div>
+            </div>
+        </div>
+    </header>
+
+    {{! Navegação de Abas }}
+    <nav class="sheet-tabs tabs" data-group="primary">
+        <a class="item" data-tab="stats">Atributos</a>
+        <a class="item" data-tab="cyberware">Ciberwares</a>
+        <a class="item" data-tab="inventory">Inventário</a>
+    </nav>
+
+    <section class="sheet-body">
+        {{! Aba Atributos }}
+        <div class="tab stats" data-group="primary" data-tab="stats">
+            <div class="grid grid-6col">
+                <div>
+                    <label>Força</label>
+                    <input
+                        type="number"
+                        name="system.strength"
+                        value="{{system.strength}}"
+                    />
+                </div>
+                <div>
+                    <label>Destreza</label>
+                    <input
+                        type="number"
+                        name="system.dexterity"
+                        value="{{system.dexterity}}"
+                    />
+                </div>
+                <div>
+                    <label>Constituição</label>
+                    <input
+                        type="number"
+                        name="system.constitution"
+                        value="{{system.constitution}}"
+                    />
+                </div>
+                <div>
+                    <label>Inteligência</label>
+                    <input
+                        type="number"
+                        name="system.intelligence"
+                        value="{{system.intelligence}}"
+                    />
+                </div>
+                <div>
+                    <label>Sabedoria</label>
+                    <input
+                        type="number"
+                        name="system.wisdom"
+                        value="{{system.wisdom}}"
+                    />
+                </div>
+                <div>
+                    <label>Carisma</label>
+                    <input
+                        type="number"
+                        name="system.charisma"
+                        value="{{system.charisma}}"
+                    />
+                </div>
+            </div>
+
+            <div class="form-group margin-top">
+                <label>Nuyen (¥)</label>
+                <input
+                    type="number"
+                    name="system.nuyen"
+                    value="{{system.nuyen}}"
+                />
+            </div>
+        </div>
+
+        {{! Aba Ciberware }}
+        <div class="tab cyberware" data-group="primary" data-tab="cyberware">
+            <textarea
+                name="system.cyberware"
+                rows="5"
+            >{{system.cyberware}}</textarea>
+        </div>
+
+        {{! Aba Inventário }}
+        <div class="tab inventory" data-group="primary" data-tab="inventory">
+            <textarea
+                name="system.equipment"
+                rows="5"
+            >{{system.equipment}}</textarea>
+        </div>
+    </section>
+</form>
