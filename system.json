@@ -25,12 +25,12 @@
   "media": [
     {
       "type": "cover",
-      "url": "https://raw.githubusercontent.com/MarcioBADias/shadowrun-d20-5e/main/assets/cover.png",
+      "url": "https://cdn.jsdelivr.net/gh/MarcioBADias/shadowrun-d20-5e@main/assets/cover.png",
       "caption": "Shadowrun 5e24 Cover"
     },
     {
       "type": "icon",
-      "url": "blob:https://gemini.google.com/d062e56e-c17b-4799-8555-3cef520aa767"
+      "url": "assets/cover.png"
     }
   ],
   "url": "https://github.com/MarcioBADias/shadowrun-d20-5e",
