@@ -3,7 +3,7 @@ import { ShadowrunActorSheet } from "./module/sheets/actor-sheet.js";
 // Função para carregar os templates Handlebars na memória
 async function preloadHandlebarsTemplates() {
   const templatePaths = [
-    "systems/shadowrun-d20-5e/templates/actor/character-sheet.hbs",
+    "systems/shadowrun-d20-5e/templates/actors/character-sheet.hbs",
   ];
   return loadTemplates(templatePaths);
 }
