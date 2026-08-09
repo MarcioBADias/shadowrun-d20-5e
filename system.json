@@ -22,15 +22,17 @@
       "path": "lang/pt-BR.json"
     }
   ],
+  "background": "systems/shadowrun5e24/assets/cover.png",
   "media": [
     {
       "type": "cover",
-      "url": "https://cdn.jsdelivr.net/gh/MarcioBADias/shadowrun-d20-5e@main/assets/cover.png",
+      "url": "systems/shadowrun5e24/assets/cover.png",
       "caption": "Shadowrun 5e24 Cover"
     },
     {
-      "type": "icon",
-      "url": "assets/cover.png"
+      "type": "setup",
+      "url": "systems/shadowrun5e24/assets/cover.png",
+      "thumbnail": "systems/shadowrun5e24/assets/cover.png"
     }
   ],
   "url": "https://github.com/MarcioBADias/shadowrun-d20-5e",
