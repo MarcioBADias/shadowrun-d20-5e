@@ -1,190 +1,187 @@
-@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap");
-
-/* Global cyberpunk theme */
-.dnd5e.sheet.actor {
-  background: linear-gradient(180deg, #04060b 0%, #090d16 100%);
-  color: #d4e4ff;
-  font-family: "Orbitron", "Roboto", sans-serif;
+/* --- ESTILO GERAL DA FICHA SHADOWRUN --- */
+.sr-sheet {
+  background-color: #050811 !important;
+  color: #a3c7d6;
+  font-family: "Courier New", Courier, monospace, sans-serif;
+  padding: 12px;
 }
 
-.dnd5e.sheet.actor .window-content,
-.dnd5e.sheet.actor .sheet-body {
-  background: rgba(6, 9, 16, 0.92);
-  backdrop-filter: blur(12px);
+.sr-sheet input[type="text"],
+.sr-sheet input[type="number"],
+.sr-sheet select {
+  background: #0b1120;
+  border: 1px solid #1a2a40;
+  color: #00e5ff;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 2px;
 }
 
-.dnd5e.sheet.actor .sheet-header {
-  position: relative;
-  overflow: hidden;
-  background:
-    linear-gradient(180deg, rgba(2, 8, 18, 0.72), rgba(0, 0, 0, 0.92) 70%),
-    url("../ui/official/banner-character-dark.jpg") center/cover no-repeat;
-  border-bottom: 1px solid rgba(0, 240, 255, 0.22);
+.sr-sheet input:focus {
+  border-color: #ff0055;
+  box-shadow: 0 0 5px rgba(255, 0, 85, 0.5);
 }
 
-.dnd5e.sheet.actor .sheet-header::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, rgba(0, 240, 255, 0.18), transparent 55%);
-  pointer-events: none;
+/* --- CABEÇALHO --- */
+.sr-header {
+  border-bottom: 2px solid #00e5ff;
+  padding-bottom: 8px;
 }
 
-.dnd5e.sheet.actor .sheet-header * {
-  position: relative;
-  z-index: 1;
+.sr-header .profile-img {
+  width: 80px;
+  height: 80px;
+  border: 2px solid #00e5ff;
+  border-radius: 4px;
+  object-fit: cover;
 }
 
-.dnd5e.sheet.actor .sheet-header .left,
-.dnd5e.sheet.actor .sheet-header .right {
+.header-info h1.charname input {
+  font-size: 24px;
+  text-align: left;
+  border: none;
+  background: transparent;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.char-subtitle {
+  font-size: 11px;
+  color: #7b9ab0;
+}
+
+.proficiency-bonus {
+  font-size: 11px;
+  color: #ff0055;
+  margin-top: 4px;
+}
+
+/* --- TITULOS E CAIXAS --- */
+.sr-section-title {
+  color: #00e5ff;
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  border-bottom: 1px solid #00e5ff;
+  padding-bottom: 2px;
+  margin-bottom: 6px;
+}
+
+.sr-input-block {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
 }
 
-.dnd5e.sheet.actor .sheet-header .document-name,
-.dnd5e.sheet.actor .sheet-header input.document-name {
-  color: #f8fbff;
-  text-shadow: 0 0 18px rgba(0, 240, 255, 0.28);
-  font-size: 2rem;
-}
-
-.dnd5e.sheet.actor .sheet-header .class,
-.dnd5e.sheet.actor .sheet-header .xp-label,
-.dnd5e.sheet.actor .sheet-header .level-badge {
-  color: #8bf0ff;
-}
-
-.dnd5e.sheet.actor .sheet-header .header-fields,
-.dnd5e.sheet.actor .sheet-header .resource {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem;
-}
-
-.dnd5e.sheet.actor .sheet-header .resource {
-  flex: 1 1 10rem;
-  min-width: 10rem;
-}
-
-.dnd5e.sheet.actor .sheet-header .resource label {
-  display: block;
-  margin-bottom: 0.35rem;
-  color: #7be6ff;
-  font-size: 0.75rem;
-  letter-spacing: 0.12em;
-}
-
-.dnd5e.sheet.actor .sheet-header .resource input {
-  width: 100%;
-  padding: 0.65rem 0.75rem;
-  border-color: rgba(0, 240, 255, 0.32);
-  color: #edf3ff;
-}
-
-.dnd5e.sheet.actor .attribute,
-.dnd5e.sheet.actor .ability-scores .ability,
-.dnd5e.sheet.actor .sheet-body .sheet-header,
-.dnd5e.sheet.actor .sheet-body .sidebar,
-.dnd5e.sheet.actor .sheet-body .sheet-body {
-  background: rgba(9, 14, 23, 0.94);
-  border: 1px solid rgba(0, 240, 255, 0.14);
-  box-shadow: 0 0 14px rgba(0, 240, 255, 0.08);
-}
-
-.dnd5e.sheet.actor .window-content,
-.dnd5e.sheet.actor .tab.form {
-  border-radius: 1rem;
-}
-
-.dnd5e.sheet.actor h2,
-.dnd5e.sheet.actor .window-title,
-.dnd5e.sheet.actor .mod,
-.dnd5e.sheet.actor .form-group .form-group-label {
-  color: #00f0ff;
+.sr-input-block label,
+.sr-vital-box label {
+  font-size: 9px;
+  color: #53758e;
   text-transform: uppercase;
 }
 
-.dnd5e.sheet.actor .proficiency-toggle.active {
-  background-color: #ff0055;
-  box-shadow: 0 0 9px #ff0055;
+/* --- VITALS / CAIXAS SUPERIORES --- */
+.sr-vital-box {
+  background: #0a101d;
+  border: 1px solid #132238;
+  padding: 4px;
+  text-align: center;
 }
 
-.dnd5e.sheet.actor button,
-.dnd5e.sheet.actor .unbutton,
-.dnd5e.sheet.actor .sheet-footer button {
-  border: 1px solid rgba(0, 240, 255, 0.45);
-  background: rgba(1, 8, 18, 0.8);
-  color: #a9f1ff;
+.sr-vital-box .sub-val {
+  color: #00e5ff;
+  font-size: 16px;
+  font-weight: bold;
 }
 
-.dnd5e.sheet.actor button:hover,
-.dnd5e.sheet.actor .unbutton:hover {
-  box-shadow: 0 0 12px rgba(0, 240, 255, 0.38);
+.sr-vital-box small {
+  font-size: 8px;
+  color: #53758e;
 }
 
-.dnd5e.sheet.actor input,
-.dnd5e.sheet.actor select,
-.dnd5e.sheet.actor textarea {
-  color: #edf3ff;
-}
-
-.dnd5e.sheet.actor .sheet-body {
-  padding: 1rem 1rem 1.25rem;
-}
-
-.dnd5e.sheet.actor .tab h3 {
-  color: #7be6ff;
-}
-
-.dnd5e.sheet.actor .editor,
-.dnd5e.sheet.actor .editor-content {
-  background: rgba(4, 7, 15, 0.85);
-}
-
-/* Limpeza de Neon e Efeitos Luminosos */
-.shadowrun-d20,
-.window-app .window-content {
-  background: #111827; /* Dark limpo/slate sem brilhos */
-  color: #e5e7eb;
-  font-family: "Roboto", "Signika", sans-serif;
-  border: 1px solid #374151;
-  box-shadow: none !important;
-  text-shadow: none !important;
-}
-
-/* Remover gradientes e brilhos neon dos blocos */
-.shadowrun-d20 .ability-card,
-.shadowrun-d20 .header-box,
-.shadowrun-d20 .resource-block {
-  background: #1f2937;
-  border: 1px solid #4b5563;
-  border-radius: 4px;
-  box-shadow: none !important;
-}
-
-/* Títulos limpos e legíveis */
-.shadowrun-d20 h1,
-.shadowrun-d20 h2,
-.shadowrun-d20 h3 {
-  color: #38bdf8; /* Ciano fosco e legível */
-  border-bottom: 1px solid #374151;
-  text-transform: uppercase;
-  font-weight: 600;
-  text-shadow: none;
-}
-
-/* Tabela de Perícias e Campos de Texto */
-.shadowrun-d20 input[type="text"],
-.shadowrun-d20 input[type="number"],
-.shadowrun-d20 select {
-  background: #111827;
-  color: #f3f4f6;
-  border: 1px solid #4b5563;
+/* --- ATRIBUTOS --- */
+.sr-attr-card {
+  background: #090e1a;
+  border: 1px solid #00e5ff;
+  text-align: center;
+  padding: 6px;
   border-radius: 3px;
 }
 
-.shadowrun-d20 input:focus {
-  border-color: #38bdf8;
-  box-shadow: 0 0 2px #38bdf8;
+.sr-attr-card label {
+  color: #00e5ff;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.sr-attr-card input {
+  font-size: 20px;
+  border: none;
+  background: transparent;
+}
+
+.attr-mod {
+  font-size: 12px;
+  color: #7b9ab0;
+}
+
+.attr-resist {
+  font-size: 8px;
+  color: #53758e;
+  margin-top: 4px;
+}
+
+/* --- PERÍCIAS --- */
+.skill-row {
+  background: #080d17;
+  border: 1px solid #101c2e;
+  padding: 4px 8px;
+  margin-bottom: 2px;
+  align-items: center;
+}
+
+.skill-prof-indicator {
+  width: 8px;
+  height: 8px;
+  background: #101c2e;
+  margin-right: 6px;
+}
+
+.skill-prof-indicator.magenta,
+.star-icon.magenta,
+.highlight-magenta {
+  color: #ff0055 !important;
+  background-color: #ff0055;
+}
+
+.skill-val {
+  margin-left: auto;
+  color: #00e5ff;
+  font-weight: bold;
+}
+
+/* --- INVENTÁRIO E CARDS --- */
+.inventory-item,
+.attack-card,
+.sr-card-item {
+  background: #080d17;
+  border: 1px solid #132238;
+  padding: 6px 10px;
+  margin-bottom: 4px;
+}
+
+.badge-equipped {
+  border: 1px solid #ff0055;
+  color: #ff0055;
+  font-size: 9px;
+  padding: 2px 4px;
+}
+
+.highlight-cyan {
+  color: #00e5ff !important;
+}
+
+.nuyen-badge {
+  color: #ff0055;
+  font-size: 11px;
 }

@@ -1,12 +1,14 @@
-<form class="{{cssClass}} flexcol" autocomplete="off">
-    <header class="sheet-header">
+<form class="{{cssClass}} sr-sheet flexcol" autocomplete="off">
+
+    {{! Topo / Cabeçalho }}
+    <header class="sr-header flexrow">
         <img
             class="profile-img"
             src="{{actor.img}}"
             data-edit="img"
             title="{{actor.name}}"
         />
-        <div class="header-fields">
+        <div class="header-info flexcol">
             <h1 class="charname">
                 <input
                     name="name"
@@ -15,121 +17,279 @@
                     placeholder="Nome do Runner"
                 />
             </h1>
-            <div class="resources grid grid-3col">
-                <div>
-                    <label>Raça</label>
-                    <input
-                        type="text"
-                        name="system.race"
-                        value="{{system.race}}"
-                    />
-                </div>
-                <div>
-                    <label>Arquétipo/Classe</label>
-                    <input
-                        type="text"
-                        name="system.class_slug"
-                        value="{{system.class_slug}}"
-                    />
-                </div>
-                <div>
-                    <label>Essência</label>
-                    <input
-                        type="number"
-                        step="0.1"
-                        name="system.essence"
-                        value="{{system.essence}}"
-                    />
-                </div>
+            <div class="char-subtitle">
+                <span>{{system.class_slug}}</span>
+                ·
+                <span>Nível {{system.level}}</span>
+                ·
+                <span>{{system.race}}</span>
+                /
+                <span>{{system.background}}</span>
+            </div>
+            <div class="proficiency-bonus">
+                Bônus de proficiência:
+                <span class="highlight">+2</span>
             </div>
         </div>
     </header>
 
-    {{! Navegação de Abas }}
-    <nav class="sheet-tabs tabs" data-group="primary">
-        <a class="item" data-tab="stats">Atributos</a>
-        <a class="item" data-tab="cyberware">Ciberwares</a>
-        <a class="item" data-tab="inventory">Inventário</a>
-    </nav>
-
-    <section class="sheet-body">
-        {{! Aba Atributos }}
-        <div class="tab stats" data-group="primary" data-tab="stats">
-            <div class="grid grid-6col">
-                <div>
-                    <label>Força</label>
-                    <input
-                        type="number"
-                        name="system.strength"
-                        value="{{system.strength}}"
-                    />
-                </div>
-                <div>
-                    <label>Destreza</label>
-                    <input
-                        type="number"
-                        name="system.dexterity"
-                        value="{{system.dexterity}}"
-                    />
-                </div>
-                <div>
-                    <label>Constituição</label>
-                    <input
-                        type="number"
-                        name="system.constitution"
-                        value="{{system.constitution}}"
-                    />
-                </div>
-                <div>
-                    <label>Inteligência</label>
-                    <input
-                        type="number"
-                        name="system.intelligence"
-                        value="{{system.intelligence}}"
-                    />
-                </div>
-                <div>
-                    <label>Sabedoria</label>
-                    <input
-                        type="number"
-                        name="system.wisdom"
-                        value="{{system.wisdom}}"
-                    />
-                </div>
-                <div>
-                    <label>Carisma</label>
-                    <input
-                        type="number"
-                        name="system.charisma"
-                        value="{{system.charisma}}"
-                    />
-                </div>
-            </div>
-
-            <div class="form-group margin-top">
-                <label>Nuyen (¥)</label>
-                <input
-                    type="number"
-                    name="system.nuyen"
-                    value="{{system.nuyen}}"
-                />
-            </div>
+    {{! Seção de Classe, Metatipo, Antecedente e Nível }}
+    <section class="sr-box-row grid grid-4col margin-top-sm">
+        <div class="sr-input-block">
+            <label>Classe</label>
+            <input
+                type="text"
+                name="system.class_slug"
+                value="{{system.class_slug}}"
+            />
         </div>
-
-        {{! Aba Ciberware }}
-        <div class="tab cyberware" data-group="primary" data-tab="cyberware">
-            <textarea
-                name="system.cyberware"
-                rows="5"
-            >{{system.cyberware}}</textarea>
+        <div class="sr-input-block">
+            <label>Metatipo</label>
+            <input type="text" name="system.race" value="{{system.race}}" />
         </div>
-
-        {{! Aba Inventário }}
-        <div class="tab inventory" data-group="primary" data-tab="inventory">
-            <textarea
-                name="system.equipment"
-                rows="5"
-            >{{system.equipment}}</textarea>
+        <div class="sr-input-block">
+            <label>Antecedente</label>
+            <input
+                type="text"
+                name="system.background"
+                value="{{system.background}}"
+            />
+        </div>
+        <div class="sr-input-block">
+            <label>Nível</label>
+            <input type="number" name="system.level" value="{{system.level}}" />
         </div>
     </section>
+
+    {{! Descrições / Traits }}
+    <div class="sr-traits-row flexrow margin-top-xs">
+        <p class="trait-desc"><strong
+                class="highlight-cyan"
+            >{{system.race}}:</strong>
+            Espinha dorsal numérica da sociedade e do corporativismo.
+            Adaptabilidade, resiliência e ambição desenfreada.</p>
+        <p class="trait-desc"><strong
+                class="highlight-cyan"
+            >{{system.background}}:</strong>
+            Entusiasta da rede e hacker de aluguel de pequenos delitos. A rede é
+            seu hábitat natural.</p>
+    </div>
+
+    {{! Status Vitais e Iniciativas }}
+    <section class="sr-vitals-row grid grid-6col margin-top-sm">
+        <div class="sr-vital-box">
+            <label>PV ATUAIS</label>
+            <input
+                type="number"
+                name="system.current_hp"
+                value="{{system.current_hp}}"
+            />
+        </div>
+        <div class="sr-vital-box">
+            <label>PV MÁX.</label>
+            <input
+                type="number"
+                name="system.max_hp"
+                value="{{system.max_hp}}"
+            />
+        </div>
+        <div class="sr-vital-box">
+            <label>CA</label>
+            <input
+                type="number"
+                name="system.armor_class"
+                value="{{system.armor_class}}"
+            />
+        </div>
+        <div class="sr-vital-box">
+            <label>ESSÊNCIA</label>
+            <input
+                type="number"
+                step="0.1"
+                name="system.essence"
+                value="{{system.essence}}"
+            />
+        </div>
+        <div class="sr-vital-box">
+            <label>INICIATIVA</label>
+            <div class="sub-val">+4</div>
+            <small>prof +2 + DES +2</small>
+        </div>
+        <div class="sr-vital-box">
+            <label>INIC. ASTRAL / MATRIX</label>
+            <div class="sub-val">+4</div>
+            <small>prof +2 + INT +2</small>
+        </div>
+    </section>
+
+    {{! Atributos }}
+    <div class="sr-section-title margin-top-md">ATRIBUTOS</div>
+    <section class="sr-attributes-grid grid grid-6col">
+        <div class="sr-attr-card">
+            <label>FOR</label>
+            <input
+                type="number"
+                name="system.strength"
+                value="{{system.strength}}"
+            />
+            <div class="attr-mod">+2</div>
+            <div class="attr-resist">RESIST. +2</div>
+        </div>
+        <div class="sr-attr-card">
+            <label>DES</label>
+            <input
+                type="number"
+                name="system.dexterity"
+                value="{{system.dexterity}}"
+            />
+            <div class="attr-mod">+2</div>
+            <div class="attr-resist highlight-magenta">RESIST. +4</div>
+        </div>
+        <div class="sr-attr-card">
+            <label>CON</label>
+            <input
+                type="number"
+                name="system.constitution"
+                value="{{system.constitution}}"
+            />
+            <div class="attr-mod">+1</div>
+            <div class="attr-resist">RESIST. +1</div>
+        </div>
+        <div class="sr-attr-card">
+            <label>INT</label>
+            <input
+                type="number"
+                name="system.intelligence"
+                value="{{system.intelligence}}"
+            />
+            <div class="attr-mod">+2</div>
+            <div class="attr-resist highlight-magenta">RESIST. +4</div>
+        </div>
+        <div class="sr-attr-card">
+            <label>SAB</label>
+            <input
+                type="number"
+                name="system.wisdom"
+                value="{{system.wisdom}}"
+            />
+            <div class="attr-mod">+0</div>
+            <div class="attr-resist">RESIST. +0</div>
+        </div>
+        <div class="sr-attr-card">
+            <label>CAR</label>
+            <input
+                type="number"
+                name="system.charisma"
+                value="{{system.charisma}}"
+            />
+            <div class="attr-mod">-1</div>
+            <div class="attr-resist">RESIST. -1</div>
+        </div>
+    </section>
+
+    {{! Perícias }}
+    <div class="sr-section-title margin-top-md">PERÍCIAS</div>
+    <section class="sr-skills-list flexcol">
+        <div class="skill-row flexrow">
+            <span class="skill-prof-indicator"></span>
+            <span class="star-icon">☆</span>
+            <div class="skill-name-group flexcol">
+                <strong>Acrobacia</strong>
+                <small>Acrobacia - Des</small>
+            </div>
+            <span class="skill-val">+2</span>
+        </div>
+
+        <div class="skill-row flexrow trained">
+            <span class="skill-prof-indicator magenta"></span>
+            <span class="star-icon magenta">★</span>
+            <div class="skill-name-group flexcol">
+                <strong>Furtividade</strong>
+                <small>Furtividade - Des</small>
+            </div>
+            <span class="skill-val">+4</span>
+        </div>
+
+        <div class="skill-row flexrow trained">
+            <span class="skill-prof-indicator magenta"></span>
+            <span class="star-icon magenta">★</span>
+            <div class="skill-name-group flexcol">
+                <strong>Tecnologia</strong>
+                <small>Tecnologia - Int - especialidade</small>
+            </div>
+            <span class="skill-val">+6</span>
+        </div>
+    </section>
+
+    {{! Ataques }}
+    <div class="sr-section-title margin-top-md">ATAQUES</div>
+    <section class="sr-attacks-list flexcol">
+        <div class="attack-card flexrow">
+            <div class="attack-info flexcol">
+                <strong>Pistola Leve (Ares Light)</strong>
+                <small>Des · Munição 12m/35m, Leve, pente 12</small>
+            </div>
+            <div class="attack-stats">
+                <span class="highlight-cyan">+4 de ataque</span>
+                <span class="highlight-magenta">1d6+2 perfurante</span>
+            </div>
+        </div>
+    </section>
+
+    {{! Inventário }}
+    <div class="sr-section-title margin-top-md flexrow align-between">
+        <span>INVENTÁRIO</span>
+        <span class="nuyen-badge">{{system.nuyen}} N$</span>
+    </div>
+    <section class="sr-inventory-list flexcol">
+        {{#each system.inventory}}
+            <div class="inventory-item flexrow align-between">
+                <div class="item-info flexcol">
+                    <strong>{{this.name}}
+                        {{#if this.qty}}x{{this.qty}}{{/if}}</strong>
+                    <small>{{this.note}}</small>
+                </div>
+                {{#if this.equipped}}
+                    <span class="badge-equipped">EQUIPADO</span>
+                {{/if}}
+            </div>
+        {{/each}}
+    </section>
+
+    {{! Habilidades e Magias em 2 Colunas }}
+    <div class="grid grid-2col margin-top-md">
+        <div class="flexcol">
+            <div class="sr-section-title">HABILIDADES DE CLASSE</div>
+            <div class="sr-card-item">
+                <strong>Cyberdeck & Atributo de Hack</strong>
+                <small>NÍVEL 1</small>
+            </div>
+        </div>
+
+        <div class="flexcol">
+            <div class="sr-section-title">HABILIDADES DE ORIGEM</div>
+            <div class="sr-card-item">
+                <strong>Engenhoso</strong>
+                <small>HUMANO (NORM)</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid grid-2col margin-top-sm">
+        <div class="flexcol">
+            <div class="sr-section-title">TALENTOS (FEATS)</div>
+            <div class="sr-card-item">
+                <strong>Especialista em Perícia</strong>
+                <small>TALENTO DE ORIGEM - RATO DA MATRIX</small>
+            </div>
+        </div>
+
+        <div class="flexcol">
+            <div class="sr-section-title">MAGIAS</div>
+            <div class="sr-card-item empty">
+                <small>Nenhum registro</small>
+            </div>
+        </div>
+    </div>
+
 </form>
