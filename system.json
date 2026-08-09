@@ -284,15 +284,15 @@
   "media": [
     {
       "type": "cover",
-      "url": "assets/cover.jpg",
-      "thumbnail": "ui/official/banner-character-dark.jpg",
+      "url": "https://share.gemini.google/mKIgo5dTDuMW",
+      "thumbnail": "https://share.gemini.google/mKIgo5dTDuMW",
       "loop": false,
       "flags": {}
     },
     {
       "type": "setup",
-      "url": "assets/cover.jpg",
-      "thumbnail": "ui/official/banner-character-dark.jpg"
+      "url": "https://share.gemini.google/mKIgo5dTDuMW",
+      "thumbnail": "https://share.gemini.google/mKIgo5dTDuMW"
     }
   ],
   "socket": true,
@@ -301,7 +301,7 @@
     "units": "ft"
   },
   "primaryTokenAttribute": "attributes.hp",
-  "background": "assets/cover.jpg",
+  "background": "https://share.gemini.google/mKIgo5dTDuMW",
   "flags": {
     "compendiumArtMappings": {
       "dnd5e": {
