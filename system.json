@@ -18,9 +18,9 @@
   "styles": ["styles/shadowrun-d20.css"],
   "languages": [
     {
-      "lang": "pt-BR",
-      "name": "Português (Brasil)",
-      "path": "lang/pt-BR.json"
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
     }
   ],
   "background": "assets/cover.png",
