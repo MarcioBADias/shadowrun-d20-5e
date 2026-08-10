@@ -1,0 +1,280 @@
+{{!--
+  Shadowrun DnD5e — Ficha de Runner (Foundry VTT ActorSheet template)
+  Registrar em: templates/actors/runner-sheet.hbs
+  CSS: shadowrun-runner-sheet.css (escopo .sr-sheet)
+
+  Dados esperados em getData():
+    actor, system.*, editable
+    attributes: [{ key, short, label, total, mod, saveMod, proficient }]
+    skills:     [{ id, name, source, attrShort, trained, expertise, bonus, custom }]
+    attacks:    [{ id, name, toHit, damage, note }]
+    inventory:  [{ id, name, qty, type, equipped, note, price, equippable }]
+    features:   [{ id, name, level, text }]
+    origins:    [{ id, name, source, text }]
+    entryPanels: [{ id, title, kind, entries }]
+--}}
+<form class="sr-sheet {{#unless editable}}sr-locked{{/unless}} {{#if system.isDead}}sr-dead{{/if}}" autocomplete="off">
+
+  {{!-- ============ CABEÇALHO ============ --}}
+  <header class="sr-header">
+    <div class="sr-avatar">
+      <img src="{{actor.img}}" data-edit="img" alt="Avatar de {{actor.name}}" />
+    </div>
+
+    <div class="sr-identity">
+      <input class="sr-name" type="text" name="name" value="{{actor.name}}" placeholder="Nome do runner" />
+      <div class="sr-tagline">
+        <span>{{system.className}}</span>
+        <span class="sr-sep">·</span>
+        <span>{{system.race}}</span>
+        <span class="sr-sep">·</span>
+        <span>{{system.background}}</span>
+        <span class="sr-sep">·</span>
+        <span>Nível {{system.level}}</span>
+        <span class="sr-sep">·</span>
+        <span>Prof. {{numberFormat system.proficiency sign=true}}</span>
+      </div>
+    </div>
+
+    <div class="sr-header-actions">
+      <a class="sr-btn sr-btn-ghost" data-action="toggle-dead" title="Morto em ação">
+        <i class="fas fa-skull"></i>
+      </a>
+      <a class="sr-btn" data-action="edit-mode">
+        <i class="fas fa-pen"></i> Editar
+      </a>
+    </div>
+  </header>
+
+  {{#if system.isDead}}
+    <p class="sr-dead-flag">Morto em ação</p>
+  {{/if}}
+
+  {{!-- ============ BLOCO DE COMBATE ============ --}}
+  <section class="sr-grid sr-grid-combat">
+    <label class="sr-stat sr-stat-input">
+      <span class="sr-stat-label">PV atuais</span>
+      <input type="number" name="system.hp.value" value="{{system.hp.value}}" />
+    </label>
+
+    <label class="sr-stat sr-stat-input">
+      <span class="sr-stat-label">PV máx.</span>
+      <input type="number" name="system.hp.max" value="{{system.hp.max}}" />
+    </label>
+
+    <div class="sr-stat">
+      <span class="sr-stat-label">CA</span>
+      <span class="sr-stat-value">{{system.ac}}</span>
+    </div>
+
+    <label class="sr-stat sr-stat-input">
+      <span class="sr-stat-label">Essência</span>
+      <input type="number" step="0.01" name="system.essence" value="{{system.essence}}" />
+    </label>
+
+    <div class="sr-stat">
+      <span class="sr-stat-label">Iniciativa</span>
+      <span class="sr-stat-value">{{numberFormat system.initiative.physical sign=true}}</span>
+      <span class="sr-stat-hint">prof + DES</span>
+    </div>
+
+    <div class="sr-stat">
+      <span class="sr-stat-label">Inic. Astral</span>
+      <span class="sr-stat-value">{{numberFormat system.initiative.astral sign=true}}</span>
+      <span class="sr-stat-hint">prof + INT</span>
+    </div>
+
+    <div class="sr-stat">
+      <span class="sr-stat-label">Inic. Matrix</span>
+      <span class="sr-stat-value">{{numberFormat system.initiative.matrix sign=true}}</span>
+      <span class="sr-stat-hint">prof + INT</span>
+    </div>
+
+    <label class="sr-stat sr-stat-input">
+      <span class="sr-stat-label">Nuyen</span>
+      <input type="number" name="system.nuyen" value="{{system.nuyen}}" />
+    </label>
+  </section>
+
+  {{!-- ============ ATRIBUTOS ============ --}}
+  <section class="sr-section">
+    <h2 class="sr-title">Atributos</h2>
+    <div class="sr-grid sr-grid-attrs">
+      {{#each attributes as |attr|}}
+        <div class="sr-attr" data-attr="{{attr.key}}">
+          <span class="sr-attr-short" title="{{attr.label}}">{{attr.short}}</span>
+          <span class="sr-attr-total">{{attr.total}}</span>
+          <span class="sr-attr-mod">{{numberFormat attr.mod sign=true}}</span>
+          <input class="sr-attr-input" type="number" name="system.{{attr.key}}" value="{{attr.base}}" />
+          <a class="sr-attr-save {{#if attr.proficient}}is-prof{{/if}}"
+             data-action="roll-save" data-attr="{{attr.key}}" title="Teste de resistência">
+            Resist. {{numberFormat attr.saveMod sign=true}}
+          </a>
+        </div>
+      {{/each}}
+    </div>
+  </section>
+
+  {{!-- ============ PERÍCIAS ============ --}}
+  <section class="sr-section">
+    <h2 class="sr-title sr-title-collapsible" data-action="toggle" data-target="skills">
+      <i class="fas fa-chevron-down"></i> Perícias
+      <small>treinado soma proficiência; a estrela dobra o bônus</small>
+    </h2>
+
+    <div class="sr-panel" data-panel="skills">
+      {{#each skills as |skill|}}
+        <div class="sr-row sr-skill">
+          <a class="sr-toggle {{#if skill.trained}}is-on{{/if}}"
+             data-action="toggle-trained" data-skill="{{skill.id}}"
+             title="Treinado"><span></span></a>
+
+          <a class="sr-star {{#if skill.expertise}}is-on{{/if}}"
+             data-action="toggle-expertise" data-skill="{{skill.id}}"
+             title="Especialidade: dobra a proficiência">
+            <i class="fas fa-star"></i>
+          </a>
+
+          <div class="sr-row-main">
+            <a class="sr-row-name" data-action="roll-skill" data-skill="{{skill.id}}">{{skill.name}}</a>
+            <span class="sr-row-sub">
+              {{skill.source}} · {{skill.attrShort}}{{#if skill.expertise}} · especialidade{{/if}}
+            </span>
+          </div>
+
+          <span class="sr-row-value">{{numberFormat skill.bonus sign=true}}</span>
+
+          {{#if skill.custom}}
+            <a class="sr-row-del" data-action="delete-skill" data-skill="{{skill.id}}">
+              <i class="fas fa-trash"></i>
+            </a>
+          {{/if}}
+        </div>
+      {{/each}}
+
+      <div class="sr-panel-foot">
+        <a class="sr-btn sr-btn-outline" data-action="create-skill">
+          <i class="fas fa-plus"></i> Nova perícia customizada
+        </a>
+      </div>
+    </div>
+  </section>
+
+  {{!-- ============ ATAQUES ============ --}}
+  {{#if attacks.length}}
+  <section class="sr-section">
+    <h2 class="sr-title">Ataques</h2>
+    <div class="sr-panel">
+      {{#each attacks as |atk|}}
+        <div class="sr-row">
+          <div class="sr-row-main">
+            <a class="sr-row-name" data-action="roll-attack" data-item="{{atk.id}}">{{atk.name}}</a>
+            {{#if atk.note}}<span class="sr-row-sub">{{atk.note}}</span>{{/if}}
+          </div>
+          <span class="sr-chip">{{atk.toHit}} atk</span>
+          <span class="sr-chip sr-chip-magenta">{{atk.damage}}</span>
+        </div>
+      {{/each}}
+    </div>
+  </section>
+  {{/if}}
+
+  {{!-- ============ INVENTÁRIO ============ --}}
+  <section class="sr-section">
+    <h2 class="sr-title">
+      Inventário
+      <a class="sr-btn sr-btn-outline sr-title-action" data-action="buy-item">
+        <i class="fas fa-plus"></i> Comprar
+      </a>
+    </h2>
+    <div class="sr-panel">
+      {{#each inventory as |item|}}
+        <div class="sr-row">
+          <div class="sr-row-main">
+            <a class="sr-row-name" data-action="open-item" data-item="{{item.id}}">{{item.name}}</a>
+            <span class="sr-row-sub">
+              {{item.type}}{{#if item.note}} · {{item.note}}{{/if}}{{#if item.price}} · {{item.price}}¥{{/if}}
+            </span>
+          </div>
+          <span class="sr-qty">x{{item.qty}}</span>
+          {{#if item.equippable}}
+            <a class="sr-toggle {{#if item.equipped}}is-on{{/if}}"
+               data-action="toggle-equipped" data-item="{{item.id}}" title="Equipado"><span></span></a>
+          {{/if}}
+          <a class="sr-row-del" data-action="delete-item" data-item="{{item.id}}">
+            <i class="fas fa-trash"></i>
+          </a>
+        </div>
+      {{else}}
+        <p class="sr-empty">Inventário vazio.</p>
+      {{/each}}
+    </div>
+  </section>
+
+  {{!-- ============ TALENTOS / MAGIAS / CYBERWARE ============ --}}
+  <section class="sr-grid sr-grid-2">
+    {{#each entryPanels as |panel|}}
+      <div class="sr-panel sr-panel-boxed">
+        <h3 class="sr-subtitle">{{panel.title}}</h3>
+        {{#each panel.entries as |entry|}}
+          <div class="sr-accordion">
+            <a class="sr-accordion-head" data-action="toggle-accordion">
+              <i class="fas fa-chevron-down"></i>
+              <span class="sr-accordion-title">{{entry.name}}</span>
+              {{#if entry.source}}<span class="sr-accordion-sub">{{entry.source}}</span>{{/if}}
+            </a>
+            <div class="sr-accordion-body">{{{entry.text}}}</div>
+          </div>
+        {{else}}
+          <p class="sr-empty">Nada registrado.</p>
+        {{/each}}
+        <a class="sr-btn sr-btn-outline" data-action="add-entry" data-kind="{{panel.kind}}">
+          <i class="fas fa-plus"></i> Adicionar
+        </a>
+      </div>
+    {{/each}}
+  </section>
+
+  {{!-- ============ HABILIDADES ============ --}}
+  <section class="sr-grid sr-grid-2">
+    <div class="sr-panel sr-panel-boxed">
+      <h3 class="sr-subtitle">Habilidades de Classe</h3>
+      {{#each features as |feat|}}
+        <div class="sr-accordion">
+          <a class="sr-accordion-head" data-action="toggle-accordion">
+            <i class="fas fa-chevron-down"></i>
+            <span class="sr-accordion-title">{{feat.name}}</span>
+            <span class="sr-accordion-sub">Nível {{feat.level}}</span>
+          </a>
+          <div class="sr-accordion-body">{{{feat.text}}}</div>
+        </div>
+      {{else}}
+        <p class="sr-empty">Escolha uma classe para ver as habilidades por nível.</p>
+      {{/each}}
+    </div>
+
+    <div class="sr-panel sr-panel-boxed">
+      <h3 class="sr-subtitle">Habilidades de Origem</h3>
+      {{#each origins as |trait|}}
+        <div class="sr-accordion">
+          <a class="sr-accordion-head" data-action="toggle-accordion">
+            <i class="fas fa-chevron-down"></i>
+            <span class="sr-accordion-title">{{trait.name}}</span>
+            {{#if trait.source}}<span class="sr-accordion-sub">{{trait.source}}</span>{{/if}}
+          </a>
+          <div class="sr-accordion-body">{{{trait.text}}}</div>
+        </div>
+      {{else}}
+        <p class="sr-empty">Escolha metatipo e antecedente para ver os traços de origem.</p>
+      {{/each}}
+    </div>
+  </section>
+
+  {{!-- ============ ANOTAÇÕES ============ --}}
+  <section class="sr-section">
+    <h2 class="sr-title">Anotações</h2>
+    <div class="sr-panel sr-panel-boxed">
+      {{editor system.notes target="system.notes" button=true editable=editable engine="prosemirror"}}
+    </div>
+  </section>
+</form>

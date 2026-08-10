@@ -1,9 +1,9 @@
-import { ShadowrunActorSheet } from "./module/sheets/actor-sheet.js";
+import { RunnerSheet } from "./module/sheets/runner-sheet.mjs";
 
 // Função para carregar os templates Handlebars na memória
 async function preloadHandlebarsTemplates() {
   const templatePaths = [
-    "systems/shadowrun-d20-5e/templates/actors/character-sheet.hbs",
+    "systems/shadowrun-d20-5e/templates/actors/runner-sheet.hbs",
   ];
   return loadTemplates(templatePaths);
 }
@@ -15,10 +15,10 @@ Hooks.once("init", async function () {
   Actors.unregisterSheet("core", ActorSheet);
 
   // 2. Registra a ficha customizada
-  Actors.registerSheet("shadowrun-d20-5e", ShadowrunActorSheet, {
+  Actors.registerSheet("shadowrun-d20-5e", RunnerSheet, {
     types: ["character"],
     makeDefault: true,
-    label: "Ficha Shadowrun D20 5e",
+    label: "Runner Sheet (Shadowrun D20 5e)",
   });
 
   // 3. Pré-carrega os arquivos HBS

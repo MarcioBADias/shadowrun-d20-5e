@@ -15,7 +15,7 @@
     "verified": "12"
   },
   "esmodules": ["shadowrun-d20.js"],
-  "styles": ["styles/shadowrun-d20.css"],
+  "styles": ["styles/shadowrun-runner-sheet.css"],
   "languages": [
     {
       "lang": "en",

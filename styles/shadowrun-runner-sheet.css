@@ -1,0 +1,540 @@
+/* =========================================================
+   Shadowrun DnD5e — Ficha de Runner (Foundry VTT)
+   Escopo: .sr-sheet  — cole em styles/shadowrun-runner-sheet.css
+   Fontes: Orbitron (display) + Barlow (texto) + JetBrains Mono
+   ========================================================= */
+
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap");
+
+/* Deixa a janela do Foundry escura para esta ficha */
+.window-app.sheet .window-content:has(.sr-sheet) {
+  padding: 0;
+  background: #0a0a12;
+}
+
+.sr-sheet {
+  --sr-bg: #0d0c15;
+  --sr-surface: #1a1826;
+  --sr-fg: #eef0f5;
+  --sr-muted: #9aa0b4;
+  --sr-border: #2f2c45;
+  --sr-cyan: #00e5ff;
+  --sr-magenta: #ff2d78;
+  --sr-danger: #ff4d4d;
+  --sr-glow-cyan: 0 0 24px rgba(0, 229, 255, 0.35);
+  --sr-glow-magenta: 0 0 24px rgba(255, 45, 120, 0.4);
+
+  display: block;
+  min-height: 100%;
+  padding: 20px;
+  color: var(--sr-fg);
+  font-family: "Barlow", "Segoe UI", sans-serif;
+  font-size: 14px;
+  background-color: var(--sr-bg);
+  background-image:
+    radial-gradient(
+      circle at 12% -10%,
+      rgba(255, 45, 120, 0.18),
+      transparent 55%
+    ),
+    radial-gradient(circle at 92% 0%, rgba(0, 229, 255, 0.16), transparent 50%),
+    linear-gradient(rgba(0, 229, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 229, 255, 0.05) 1px, transparent 1px);
+  background-size:
+    auto,
+    auto,
+    48px 48px,
+    48px 48px;
+  background-attachment: fixed;
+}
+
+.sr-sheet * {
+  box-sizing: border-box;
+}
+.sr-sheet h1,
+.sr-sheet h2,
+.sr-sheet h3 {
+  font-family: "Orbitron", sans-serif;
+  border: none;
+  margin: 0;
+}
+.sr-sheet a {
+  color: inherit;
+  text-decoration: none;
+}
+.sr-sheet.sr-dead {
+  filter: grayscale(1);
+}
+
+/* ---------- Moldura neon reutilizável ---------- */
+.sr-panel,
+.sr-stat,
+.sr-attr,
+.sr-avatar {
+  position: relative;
+  border: 1px solid rgba(0, 229, 255, 0.35);
+  background: rgba(26, 24, 38, 0.7);
+  backdrop-filter: blur(6px);
+  border-radius: 2px;
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
+}
+.sr-panel:hover,
+.sr-stat:hover,
+.sr-attr:hover {
+  border-color: rgba(255, 45, 120, 0.65);
+  box-shadow: var(--sr-glow-magenta);
+}
+
+/* ---------- Cabeçalho ---------- */
+.sr-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--sr-border);
+}
+.sr-avatar {
+  width: 92px;
+  height: 92px;
+  flex: 0 0 auto;
+  overflow: hidden;
+}
+.sr-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: none;
+}
+
+.sr-identity {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.sr-name {
+  width: 100%;
+  padding: 0;
+  font-family: "Orbitron", sans-serif;
+  font-size: 22px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--sr-fg);
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid transparent;
+  text-shadow: 0 0 18px rgba(0, 229, 255, 0.5);
+}
+.sr-name:hover,
+.sr-name:focus {
+  border-bottom-color: var(--sr-cyan);
+  outline: none;
+  box-shadow: none;
+}
+.sr-tagline {
+  margin-top: 6px;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sr-muted);
+}
+.sr-sep {
+  color: var(--sr-magenta);
+  margin: 0 6px;
+}
+
+.sr-header-actions {
+  display: flex;
+  gap: 8px;
+}
+.sr-dead-flag {
+  margin: 10px 0 0;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--sr-muted);
+}
+
+/* ---------- Botões ---------- */
+.sr-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sr-magenta);
+  border: 1px solid var(--sr-magenta);
+  background: rgba(255, 45, 120, 0.12);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.sr-btn:hover {
+  box-shadow: var(--sr-glow-magenta);
+  text-shadow: none;
+}
+.sr-btn-outline {
+  color: var(--sr-cyan);
+  border-color: rgba(0, 229, 255, 0.6);
+  background: transparent;
+}
+.sr-btn-outline:hover {
+  background: rgba(0, 229, 255, 0.1);
+  box-shadow: var(--sr-glow-cyan);
+}
+.sr-btn-ghost {
+  color: var(--sr-muted);
+  border-color: var(--sr-border);
+  background: transparent;
+}
+
+/* ---------- Grids ---------- */
+.sr-grid {
+  display: grid;
+  gap: 12px;
+}
+.sr-grid-combat {
+  grid-template-columns: repeat(4, 1fr);
+  margin-top: 20px;
+}
+.sr-grid-attrs {
+  grid-template-columns: repeat(6, 1fr);
+}
+.sr-grid-2 {
+  grid-template-columns: 1fr 1fr;
+  margin-top: 24px;
+}
+@media (max-width: 780px) {
+  .sr-grid-combat {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .sr-grid-attrs {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .sr-grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- Stats de combate ---------- */
+.sr-stat {
+  padding: 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  justify-content: center;
+}
+.sr-stat-label {
+  font-family: "Orbitron", sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--sr-muted);
+}
+.sr-stat-value {
+  font-family: "Orbitron", sans-serif;
+  font-size: 22px;
+  color: var(--sr-cyan);
+  text-shadow: 0 0 14px rgba(0, 229, 255, 0.5);
+}
+.sr-stat-hint {
+  font-size: 9px;
+  color: var(--sr-muted);
+}
+.sr-stat input {
+  width: 100%;
+  height: 30px;
+  text-align: center;
+  font-family: "Orbitron", sans-serif;
+  font-size: 18px;
+  color: var(--sr-cyan);
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--sr-border);
+  border-radius: 0;
+}
+.sr-stat input:focus {
+  border-color: var(--sr-cyan);
+  outline: none;
+  box-shadow: var(--sr-glow-cyan);
+}
+
+/* ---------- Atributos ---------- */
+.sr-section {
+  margin-top: 26px;
+}
+.sr-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--sr-cyan);
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--sr-border);
+}
+.sr-title small {
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  color: var(--sr-muted);
+  text-transform: none;
+}
+.sr-title-action {
+  margin-left: auto;
+}
+.sr-title-collapsible {
+  cursor: pointer;
+}
+.sr-title-collapsible i {
+  transition: transform 0.2s ease;
+}
+.sr-title-collapsible.is-closed i {
+  transform: rotate(-90deg);
+}
+.sr-subtitle {
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--sr-cyan);
+  margin-bottom: 10px;
+}
+
+.sr-grid-attrs {
+  margin-top: 14px;
+}
+.sr-attr {
+  padding: 10px 8px;
+  text-align: center;
+}
+.sr-attr-short {
+  display: block;
+  font-family: "Orbitron", sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  color: var(--sr-muted);
+}
+.sr-attr-total {
+  display: block;
+  margin-top: 4px;
+  font-family: "Orbitron", sans-serif;
+  font-size: 24px;
+  color: var(--sr-cyan);
+}
+.sr-attr-mod {
+  display: block;
+  font-size: 11px;
+  color: var(--sr-muted);
+}
+.sr-attr-input {
+  width: 100%;
+  margin-top: 8px;
+  height: 26px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--sr-fg);
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--sr-border);
+  border-radius: 0;
+}
+.sr-attr-save {
+  display: block;
+  margin-top: 8px;
+  padding-top: 6px;
+  border-top: 1px solid var(--sr-border);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(154, 160, 180, 0.8);
+  cursor: pointer;
+}
+.sr-attr-save.is-prof {
+  color: var(--sr-magenta);
+}
+
+/* ---------- Linhas (perícias, ataques, inventário) ---------- */
+.sr-panel {
+  margin-top: 14px;
+}
+.sr-panel-boxed {
+  padding: 16px;
+}
+.sr-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 14px;
+  border-bottom: 1px solid rgba(47, 44, 69, 0.6);
+}
+.sr-row:last-child {
+  border-bottom: none;
+}
+.sr-row-main {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.sr-row-name {
+  display: block;
+  font-size: 13px;
+  color: var(--sr-fg);
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.sr-row-name:hover {
+  color: var(--sr-cyan);
+  text-shadow: 0 0 12px rgba(0, 229, 255, 0.6);
+}
+.sr-row-sub {
+  display: block;
+  font-size: 10px;
+  color: var(--sr-muted);
+}
+.sr-row-value {
+  width: 48px;
+  text-align: right;
+  font-family: "Orbitron", sans-serif;
+  font-size: 15px;
+  color: var(--sr-cyan);
+}
+.sr-row-del {
+  color: var(--sr-muted);
+  cursor: pointer;
+}
+.sr-row-del:hover {
+  color: var(--sr-danger);
+}
+.sr-qty {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  color: var(--sr-muted);
+}
+.sr-empty {
+  padding: 14px;
+  font-size: 12px;
+  color: var(--sr-muted);
+}
+.sr-panel-foot {
+  padding: 14px;
+  border-top: 1px solid rgba(47, 44, 69, 0.6);
+}
+
+/* Toggle "treinado"/"equipado" */
+.sr-toggle {
+  flex: 0 0 auto;
+  width: 36px;
+  height: 20px;
+  display: block;
+  border: 1px solid var(--sr-border);
+  background: rgba(154, 160, 180, 0.12);
+  cursor: pointer;
+}
+.sr-toggle span {
+  display: block;
+  width: 16px;
+  height: 16px;
+  margin: 1px;
+  background: var(--sr-muted);
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
+}
+.sr-toggle.is-on {
+  border-color: var(--sr-magenta);
+  background: rgba(255, 45, 120, 0.3);
+}
+.sr-toggle.is-on span {
+  transform: translateX(16px);
+  background: var(--sr-magenta);
+}
+.sr-locked .sr-toggle {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Estrela de especialidade */
+.sr-star {
+  color: var(--sr-muted);
+  cursor: pointer;
+}
+.sr-star:hover {
+  color: var(--sr-cyan);
+}
+.sr-star.is-on {
+  color: var(--sr-magenta);
+  text-shadow: 0 0 12px rgba(255, 45, 120, 0.8);
+}
+
+/* Chips de ataque */
+.sr-chip {
+  padding: 3px 9px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  color: var(--sr-cyan);
+  border: 1px solid rgba(0, 229, 255, 0.4);
+  background: rgba(0, 229, 255, 0.08);
+}
+.sr-chip-magenta {
+  color: var(--sr-magenta);
+  border-color: rgba(255, 45, 120, 0.45);
+  background: rgba(255, 45, 120, 0.1);
+}
+
+/* ---------- Accordions (habilidades / talentos / magias) ---------- */
+.sr-accordion {
+  border: 1px solid rgba(47, 44, 69, 0.8);
+  margin-bottom: 8px;
+}
+.sr-accordion-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  cursor: pointer;
+}
+.sr-accordion-head:hover {
+  background: rgba(0, 229, 255, 0.06);
+}
+.sr-accordion-head i {
+  color: var(--sr-cyan);
+  transition: transform 0.2s ease;
+}
+.sr-accordion.is-open .sr-accordion-head i {
+  transform: rotate(180deg);
+}
+.sr-accordion-title {
+  flex: 1 1 auto;
+  font-size: 13px;
+}
+.sr-accordion-sub {
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--sr-magenta);
+}
+.sr-accordion-body {
+  display: none;
+  padding: 12px;
+  border-top: 1px solid rgba(47, 44, 69, 0.8);
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--sr-muted);
+  white-space: pre-wrap;
+}
+.sr-accordion.is-open .sr-accordion-body {
+  display: block;
+}
+
+/* ---------- Modo leitura ---------- */
+.sr-locked input,
+.sr-locked textarea {
+  pointer-events: none;
+  border-color: transparent;
+  background: transparent;
+}
+.sr-locked .sr-attr-input {
+  display: none;
+}

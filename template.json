@@ -13,6 +13,14 @@
         "is_dead": false,
         "avatar_url": null,
         "attribute_method": "free",
+        "proficiency": 2,
+        "initiative": {
+          "physical": 4,
+          "astral": 4,
+          "matrix": 4
+        },
+        "race_description": "Traços típicos do metatipo que influenciam estilo e habilidades.",
+        "background_description": "Histórico de vida que molda conexões, foco e especializações.",
         "strength": 10,
         "dexterity": 10,
         "constitution": 10,
