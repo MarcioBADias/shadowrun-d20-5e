@@ -1,0 +1,128 @@
+<form class="sr-npc {{#if system.isDead}}is-dead{{/if}}" autocomplete="off">
+  <header class="sr-npc__header">
+    <img class="sr-npc__avatar" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" alt="{{actor.name}}" />
+
+    <div class="sr-npc__ident">
+      {{#if editable}}
+        <input class="sr-npc__name-input" type="text" name="name" value="{{actor.name}}" placeholder="Nome do NPC" />
+      {{else}}
+        <h1 class="sr-npc__name">{{actor.name}}</h1>
+      {{/if}}
+      <p class="sr-npc__meta">
+        <span>{{categoryLabel}}</span>
+        <span class="sep">·</span>
+        <span>PV {{system.attributes.hp.value}}</span>
+        <span class="sep">·</span>
+        <span>CA {{system.attributes.ac.flat}}</span>
+      </p>
+    </div>
+
+    <a class="sr-npc__collapse" data-action="toggle-body" title="Expandir/recolher">
+      <i class="fas fa-chevron-up"></i>
+    </a>
+  </header>
+
+  <div class="sr-npc__body">
+
+    <section class="sr-abilities">
+      {{#each abilities as |ab key|}}
+        <div class="sr-ability" data-ability="{{key}}">
+          <span class="sr-ability__label">{{ab.label}}</span>
+          {{#if ../editable}}
+            <input class="sr-ability__value" type="number" name="system.abilities.{{key}}.value" value="{{ab.value}}" />
+          {{else}}
+            <span class="sr-ability__value">{{ab.value}}</span>
+          {{/if}}
+          <a class="sr-ability__mod" data-action="roll-ability" data-ability="{{key}}">{{ab.modLabel}}</a>
+        </div>
+      {{/each}}
+    </section>
+
+    <p class="sr-traits">
+      <span>Iniciativa {{initLabel}}</span>
+      <span class="sep">·</span>
+      <span>Proficiência +{{system.attributes.prof}}</span>
+      <span class="sep">·</span>
+      <span>Tamanho {{sizeLabel}}</span>
+      {{#if system.traits.senses}}
+        <span class="sep">·</span>
+        <span>{{system.traits.senses}}</span>
+      {{/if}}
+    </p>
+
+    {{#if skills.length}}
+      <section class="sr-block">
+        <h2 class="sr-block__title">Perícias</h2>
+        <div class="sr-skills">
+          {{#each skills as |sk|}}
+            <a class="sr-skill" data-action="roll-skill" data-skill="{{sk.key}}">
+              <span class="sr-skill__name">{{sk.label}}</span>
+              <span class="sr-skill__mod">{{sk.modLabel}}</span>
+            </a>
+          {{/each}}
+        </div>
+      </section>
+    {{/if}}
+
+    {{#if weapons.length}}
+      <section class="sr-block">
+        <h2 class="sr-block__title">Ataques</h2>
+        {{#each weapons as |item|}}
+          <div class="sr-card" data-item-id="{{item._id}}">
+            <div class="sr-card__head">
+              <a class="sr-card__name" data-action="roll-item">{{item.name}}</a>
+              {{#if ../editable}}
+                <span class="sr-card__ctrl">
+                  <a data-action="edit-item" title="Editar"><i class="fas fa-edit"></i></a>
+                  <a data-action="delete-item" title="Excluir"><i class="fas fa-trash"></i></a>
+                </span>
+              {{/if}}
+            </div>
+            <p class="sr-card__line">
+              {{item.attackLabel}} de ataque, {{item.damageLabel}}
+              {{#if item.rangeLabel}} · alcance {{item.rangeLabel}}{{/if}}
+            </p>
+          </div>
+        {{/each}}
+      </section>
+    {{/if}}
+
+    {{#if feats.length}}
+      <section class="sr-block">
+        <h2 class="sr-block__title">Traços</h2>
+        {{#each feats as |item|}}
+          <div class="sr-card sr-card--accordion" data-item-id="{{item._id}}">
+            <div class="sr-card__head" data-action="toggle-accordion">
+              <span class="sr-card__name">{{item.name}}</span>
+              {{#if ../editable}}
+                <span class="sr-card__ctrl">
+                  <a data-action="edit-item" title="Editar"><i class="fas fa-edit"></i></a>
+                  <a data-action="delete-item" title="Excluir"><i class="fas fa-trash"></i></a>
+                </span>
+              {{/if}}
+            </div>
+            <div class="sr-card__desc">{{{item.description}}}</div>
+          </div>
+        {{/each}}
+      </section>
+    {{/if}}
+
+    {{#if editable}}
+      <footer class="sr-npc__footer">
+        <button type="button" class="sr-btn sr-btn--cyan" data-action="add-weapon">
+          <i class="fas fa-crosshairs"></i> Novo ataque
+        </button>
+        <button type="button" class="sr-btn sr-btn--cyan" data-action="add-feat">
+          <i class="fas fa-bolt"></i> Novo traço
+        </button>
+        <button type="button" class="sr-btn sr-btn--cyan" data-action="export-json">
+          <i class="fas fa-download"></i> Exportar JSON
+        </button>
+        <button type="button" class="sr-btn sr-btn--cyan" data-action="import-json">
+          <i class="fas fa-file-import"></i> Importar JSON
+        </button>
+      </footer>
+    {{/if}}
+
+  </div>
+</form>
