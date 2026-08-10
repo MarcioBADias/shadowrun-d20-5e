@@ -20,6 +20,137 @@ export class RunnerSheet extends ActorSheet {
     const context = super.getData(options);
     const actorData = context.data;
     const sys = actorData.system || {};
+    const actorType = actorData.type || this.actor?.type || "character";
+
+    if (actorType === "npc") {
+      const abilityOrder = [
+        { key: "str", short: "FOR", label: "FORÇA" },
+        { key: "dex", short: "DES", label: "DESTREZA" },
+        { key: "con", short: "CON", label: "CONSTITUIÇÃO" },
+        { key: "int", short: "INT", label: "INTELIGÊNCIA" },
+        { key: "wis", short: "SAB", label: "SABEDORIA" },
+        { key: "cha", short: "CAR", label: "CARISMA" },
+      ];
+
+      const attributes = abilityOrder.map(({ key, short, label }) => {
+        const ability = sys.abilities?.[key] ?? {};
+        const base = Number(ability.value ?? 10);
+        const mod = Number(ability.mod ?? 0);
+        return {
+          key: `abilities.${key}`,
+          label,
+          short,
+          base,
+          total: base,
+          mod,
+          proficient: false,
+          saveMod: mod + Number(sys.attributes?.prof ?? 2),
+        };
+      });
+
+      const skillDefinitions = {
+        prc: { name: "Percepção", source: "Sab", attrShort: "SAB" },
+        itm: { name: "Intuição", source: "Sab", attrShort: "SAB" },
+        ins: { name: "Investigação", source: "Int", attrShort: "INT" },
+      };
+
+      const skills = Object.entries(sys.skills ?? {}).map(([id, skill]) => {
+        const definition = skillDefinitions[id] ?? {
+          name: id,
+          source: "",
+          attrShort: "",
+        };
+        const trained = Number(skill.value ?? 0) > 0;
+        return {
+          id,
+          name: definition.name,
+          source: definition.source,
+          attrShort: definition.attrShort,
+          trained,
+          expertise: false,
+          bonus: Number(skill.value ?? 0) + Number(sys.attributes?.prof ?? 2),
+          custom: false,
+        };
+      });
+
+      const itemEntries = Array.isArray(actorData.items)
+        ? actorData.items
+        : this.actor?.items
+          ? Array.from(this.actor.items.values())
+          : [];
+
+      const inventory = itemEntries.map((item) => ({
+        id: item._id || item.id || item.name,
+        name: item.name,
+        qty: 1,
+        type: item.type,
+        equipped: false,
+        note: item.system?.description?.value || item.type,
+        price: 0,
+        equippable: false,
+      }));
+
+      const attacks = itemEntries
+        .filter((item) => item.type === "weapon")
+        .map((item) => ({
+          id: item._id || item.id || item.name,
+          name: item.name,
+          toHit:
+            item.system?.attackBonus >= 0
+              ? `+${item.system.attackBonus}`
+              : `${item.system.attackBonus}`,
+          damage: item.system?.damage?.parts?.[0]?.[0] || "",
+          note: item.system?.range
+            ? `${item.system.range.value}m / ${item.system.range.long ?? ""}m`
+            : "",
+        }));
+
+      const entryPanels = [
+        {
+          kind: "feat",
+          title: "Talentos",
+          entries: itemEntries
+            .filter((item) => item.type === "feat")
+            .map((item) => ({
+              id: item._id || item.id || item.name,
+              name: item.name,
+              text: item.system?.description?.value || "",
+            })),
+        },
+      ];
+
+      context.system = {
+        ...sys,
+        className: actorData.name || "NPC",
+        ac: Number(sys.attributes?.ac?.flat ?? sys.ac ?? 10),
+        hp: {
+          value: Number(sys.attributes?.hp?.value ?? 0),
+          max: Number(sys.attributes?.hp?.max ?? 0),
+        },
+        initiative: {
+          physical: Number(sys.attributes?.init?.mod ?? 0),
+          astral: 0,
+          matrix: 0,
+        },
+        isDead: false,
+        proficiency: Number(sys.attributes?.prof ?? 2),
+        notes: "",
+        race: sys.traits?.size || "Médio",
+        background: sys.traits?.senses || "NPC",
+        level: 1,
+      };
+
+      context.attributes = attributes;
+      context.skills = skills;
+      context.attacks = attacks;
+      context.inventory = inventory;
+      context.entryPanels = entryPanels;
+      context.features = [];
+      context.origins = [];
+      context.editable = this.isEditable;
+      return context;
+    }
+
     const proficiency = Number(sys.proficiency ?? 2);
     const originBonuses = sys.origin_bonuses ?? {};
 
