@@ -81,6 +81,7 @@ export class ShadowrunNpcSheet extends ActorSheet {
       width: 620,
       height: 760,
       resizable: true,
+      submitOnChange: true,
     });
   }
 
@@ -281,10 +282,9 @@ export class ShadowrunNpcSheet extends ActorSheet {
       reader.readAsText(file);
     });
 
-    let imported;
+    let data;
     try {
-      const data = JSON.parse(text);
-      imported = data.actor ?? data.data ?? data;
+      data = JSON.parse(text);
     } catch (error) {
       ui.notifications.error(
         "JSON inválido. Verifique o arquivo e tente novamente.",
@@ -292,6 +292,7 @@ export class ShadowrunNpcSheet extends ActorSheet {
       return;
     }
 
+    const imported = data.actor ?? data.data ?? data;
     if (!imported || typeof imported !== "object") {
       ui.notifications.error(
         "O arquivo JSON não contém dados de ator válidos.",
@@ -306,7 +307,7 @@ export class ShadowrunNpcSheet extends ActorSheet {
       return;
     }
 
-    if (imported.data?.system && !imported.system) {
+    if (!imported.system && imported.data?.system) {
       imported.system = imported.data.system;
     }
 
@@ -324,11 +325,24 @@ export class ShadowrunNpcSheet extends ActorSheet {
     }
   }
 
+  _normalizeItemType(type) {
+    if (!type) return "item";
+    const normalized = String(type).toLowerCase();
+    if (normalized === "weapon") {
+      return "item";
+    }
+    if (normalized === "armor" || normalized === "equipment") {
+      return "item";
+    }
+    return normalized || "item";
+  }
+
   async _overwriteActorWithImportedData(imported) {
     const updateData = {};
     if (imported.name) updateData.name = imported.name;
     if (imported.img) updateData.img = imported.img;
     if (imported.avatar_url) updateData.img = imported.avatar_url;
+    if (imported.data?.avatar_url) updateData.img = imported.data.avatar_url;
     if (imported.token) updateData.token = imported.token;
     if (imported.prototypeToken)
       updateData.prototypeToken = imported.prototypeToken;
@@ -339,21 +353,6 @@ export class ShadowrunNpcSheet extends ActorSheet {
       await this.actor.update(updateData);
     }
 
-    const normalizeType = (type, itemData) => {
-      const normalized = String(type ?? "").toLowerCase();
-      if (normalized === "weapon") {
-        itemData.type = "item";
-        itemData.system = itemData.system || {};
-        itemData.system.category = itemData.system.category || "arma";
-      } else if (normalized === "armor" || normalized === "equipment") {
-        itemData.type = "item";
-        itemData.system = itemData.system || {};
-      } else {
-        itemData.type = normalized || "item";
-      }
-      return itemData;
-    };
-
     if (Array.isArray(imported.items)) {
       const currentItemIds = this.actor.items.map((item) => item.id);
       if (currentItemIds.length) {
@@ -363,7 +362,7 @@ export class ShadowrunNpcSheet extends ActorSheet {
         const itemData = duplicate(
           item instanceof foundry.abstract.Document ? item.toObject() : item,
         );
-        normalizeType(itemData.type, itemData);
+        itemData.type = this._normalizeItemType(itemData.type);
         itemData._id ||= randomID();
         return itemData;
       });
@@ -371,6 +370,34 @@ export class ShadowrunNpcSheet extends ActorSheet {
         await this.actor.createEmbeddedDocuments("Item", itemsToCreate, {
           keepId: true,
         });
+      }
+    }
+
+    if (Array.isArray(imported.effects)) {
+      const currentEffectIds = this.actor.effects.map((effect) => effect.id);
+      if (currentEffectIds.length) {
+        await this.actor.deleteEmbeddedDocuments(
+          "ActiveEffect",
+          currentEffectIds,
+        );
+      }
+      const effectsToCreate = imported.effects.map((effect) => {
+        const effectData = duplicate(
+          effect instanceof foundry.abstract.Document
+            ? effect.toObject()
+            : effect,
+        );
+        effectData._id ||= randomID();
+        return effectData;
+      });
+      if (effectsToCreate.length) {
+        await this.actor.createEmbeddedDocuments(
+          "ActiveEffect",
+          effectsToCreate,
+          {
+            keepId: true,
+          },
+        );
       }
     }
   }

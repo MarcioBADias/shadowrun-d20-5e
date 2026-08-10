@@ -19,6 +19,17 @@
   font-family: "Barlow Condensed", sans-serif;
   font-size: 15px;
   overflow: hidden;
+  min-height: 0;
+}
+
+.sr-npc__body {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
 }
 
 .sr-npc.is-dead {
