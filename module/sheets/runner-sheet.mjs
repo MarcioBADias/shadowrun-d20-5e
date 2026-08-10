@@ -61,13 +61,59 @@ export class RunnerSheet extends ActorSheet {
     const baseSkills = [
       { id: "acrobacia", name: "Acrobacia", source: "Des", attrShort: "DES" },
       {
+        id: "adestrar-feras",
+        name: "Adestrar Feras",
+        source: "Sab",
+        attrShort: "SAB",
+      },
+      { id: "arcanismo", name: "Arcanismo", source: "Int", attrShort: "INT" },
+      { id: "atletismo", name: "Atletismo", source: "For", attrShort: "FOR" },
+      { id: "atuacao", name: "Atuação", source: "Car", attrShort: "CAR" },
+      { id: "enganacao", name: "Enganação", source: "Car", attrShort: "CAR" },
+      {
         id: "furtividade",
         name: "Furtividade",
         source: "Des",
         attrShort: "DES",
       },
-      { id: "atletismo", name: "Atletismo", source: "For", attrShort: "FOR" },
-      { id: "percepcao", name: "Percepção", source: "Int", attrShort: "INT" },
+      { id: "historia", name: "História", source: "Int", attrShort: "INT" },
+      {
+        id: "intimidacao",
+        name: "Intimidação",
+        source: "Car",
+        attrShort: "CAR",
+      },
+      { id: "intuicao", name: "Intuição", source: "Sab", attrShort: "SAB" },
+      {
+        id: "investigacao",
+        name: "Investigação",
+        source: "Int",
+        attrShort: "INT",
+      },
+      { id: "medicina", name: "Medicina", source: "Sab", attrShort: "SAB" },
+      { id: "natureza", name: "Natureza", source: "Int", attrShort: "INT" },
+      { id: "percepcao", name: "Percepção", source: "Sab", attrShort: "SAB" },
+      { id: "persuasao", name: "Persuasão", source: "Car", attrShort: "CAR" },
+      {
+        id: "prestidigitacao",
+        name: "Prestidigitação",
+        source: "Des",
+        attrShort: "DES",
+      },
+      { id: "religiao", name: "Religião", source: "Int", attrShort: "INT" },
+      {
+        id: "sobrevivencia",
+        name: "Sobrevivência",
+        source: "Sab",
+        attrShort: "SAB",
+      },
+      {
+        id: "tecnologia",
+        name: "Tecnologia",
+        source: "Int · especialidade",
+        attrShort: "INT",
+      },
+      { id: "pilotagem", name: "Pilotagem", source: "Des", attrShort: "DES" },
     ];
 
     const skills = baseSkills.map((skill) => {
