@@ -14,7 +14,7 @@
     "minimum": "11",
     "verified": "12"
   },
-  "esmodules": ["module/shadowrun.mjs"],
+  "esmodules": ["shadowrun-d20.js"],
   "styles": ["styles/shadowrun-d20.css"],
   "languages": [
     {
