@@ -516,6 +516,10 @@ export class RunnerSheet extends ActorSheet {
       return;
     }
 
+    if (!imported.system && imported.data?.system) {
+      imported.system = imported.data.system;
+    }
+
     try {
       await this._overwriteActorWithImportedData(imported);
       ui.notifications.info(
@@ -551,10 +555,23 @@ export class RunnerSheet extends ActorSheet {
       if (currentItemIds.length) {
         await this.actor.deleteEmbeddedDocuments("Item", currentItemIds);
       }
+      const normalizeType = (type) => {
+        if (!type) return "item";
+        const normalized = type.toLowerCase();
+        if (
+          normalized === "weapon" ||
+          normalized === "armor" ||
+          normalized === "equipment"
+        ) {
+          return "item";
+        }
+        return normalized;
+      };
       const itemsToCreate = imported.items.map((item) => {
         const itemData = duplicate(
           item instanceof foundry.abstract.Document ? item.toObject() : item,
         );
+        itemData.type = normalizeType(itemData.type);
         itemData._id ||= randomID();
         return itemData;
       });

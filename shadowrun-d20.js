@@ -14,9 +14,9 @@ Hooks.once("init", async function () {
   // 1. Desregistra fichas genéricas padrão
   Actors.unregisterSheet("core", ActorSheet);
 
-  // 2. Registra a ficha customizada
+  // 2. Registra a ficha customizada para personagens e NPCs
   Actors.registerSheet("shadowrun-d20-5e", RunnerSheet, {
-    types: ["character"],
+    types: ["character", "npc"],
     makeDefault: true,
     label: "Runner Sheet (Shadowrun D20 5e)",
   });
