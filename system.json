@@ -15,10 +15,7 @@
     "verified": "12"
   },
   "esmodules": ["shadowrun-d20.js"],
-  "styles": [
-    "styles/foundry-cyberpunk.css",
-    "styles/shadowrun-runner-sheet.css"
-  ],
+  "styles": ["styles/shadowrun-runner-sheet.css"],
   "languages": [
     {
       "lang": "en",
@@ -26,17 +23,17 @@
       "path": "lang/en.json"
     }
   ],
-  "background": "assets/cover.jpg",
+  "background": "assets/cover.png",
   "media": [
     {
       "type": "cover",
-      "url": "assets/cover.jpg",
+      "url": "assets/cover.png",
       "caption": "Shadowrun 5e24 Cover"
     },
     {
       "type": "setup",
-      "url": "assets/cover.jpg",
-      "thumbnail": "assets/cover.jpg"
+      "url": "assets/cover.png",
+      "thumbnail": "assets/cover.png"
     }
   ],
   "url": "https://github.com/MarcioBADias/shadowrun-d20-5e",
