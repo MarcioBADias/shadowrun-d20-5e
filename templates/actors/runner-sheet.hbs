@@ -72,23 +72,23 @@
       <input type="number" step="0.01" name="system.essence" value="{{system.essence}}" />
     </label>
 
-    <div class="sr-stat">
+    <a class="sr-stat sr-stat-action" data-action="roll-initiative" data-init="physical">
       <span class="sr-stat-label">Iniciativa</span>
       <span class="sr-stat-value">{{numberFormat system.initiative.physical sign=true}}</span>
       <span class="sr-stat-hint">prof + DES</span>
-    </div>
+    </a>
 
-    <div class="sr-stat">
+    <a class="sr-stat sr-stat-action" data-action="roll-initiative" data-init="astral">
       <span class="sr-stat-label">Inic. Astral</span>
       <span class="sr-stat-value">{{numberFormat system.initiative.astral sign=true}}</span>
       <span class="sr-stat-hint">prof + INT</span>
-    </div>
+    </a>
 
-    <div class="sr-stat">
+    <a class="sr-stat sr-stat-action" data-action="roll-initiative" data-init="matrix">
       <span class="sr-stat-label">Inic. Matrix</span>
       <span class="sr-stat-value">{{numberFormat system.initiative.matrix sign=true}}</span>
       <span class="sr-stat-hint">prof + INT</span>
-    </div>
+    </a>
 
     <label class="sr-stat sr-stat-input">
       <span class="sr-stat-label">Nuyen</span>
@@ -106,10 +106,14 @@
           <span class="sr-attr-total">{{attr.total}}</span>
           <span class="sr-attr-mod">{{numberFormat attr.mod sign=true}}</span>
           <input class="sr-attr-input" type="number" name="system.{{attr.key}}" value="{{attr.base}}" />
-          <a class="sr-attr-save {{#if attr.proficient}}is-prof{{/if}}"
-             data-action="roll-save" data-attr="{{attr.key}}" title="Teste de resistência">
-            Resist. {{numberFormat attr.saveMod sign=true}}
-          </a>
+          <div class="sr-attr-actions">
+            <a class="sr-btn sr-btn-outline" data-action="roll-attribute" data-attr="{{attr.key}}" data-mod="{{attr.mod}}" data-save="{{attr.saveMod}}">
+              <i class="fas fa-dice"></i> Testar
+            </a>
+            <a class="sr-btn sr-btn-ghost" data-action="roll-attribute-save" data-attr="{{attr.key}}" data-save="{{attr.saveMod}}">
+              <i class="fas fa-shield-alt"></i> Resist.
+            </a>
+          </div>
         </div>
       {{/each}}
     </div>
@@ -142,7 +146,7 @@
             </span>
           </div>
 
-          <span class="sr-row-value">{{numberFormat skill.bonus sign=true}}</span>
+          <a class="sr-chip" data-action="roll-skill" data-skill="{{skill.id}}" title="Rolagem de perícia">{{numberFormat skill.bonus sign=true}}</a>
 
           {{#if skill.custom}}
             <a class="sr-row-del" data-action="delete-skill" data-skill="{{skill.id}}">
@@ -168,11 +172,11 @@
       {{#each attacks as |atk|}}
         <div class="sr-row">
           <div class="sr-row-main">
-            <a class="sr-row-name" data-action="roll-attack" data-item="{{atk.id}}">{{atk.name}}</a>
+            <a class="sr-row-name" data-action="roll-attack" data-item="{{atk.id}}" data-tohit="{{atk.toHit}}" data-damage="{{atk.damage}}" data-name="{{atk.name}}">{{atk.name}}</a>
             {{#if atk.note}}<span class="sr-row-sub">{{atk.note}}</span>{{/if}}
           </div>
-          <span class="sr-chip">{{atk.toHit}} atk</span>
-          <span class="sr-chip sr-chip-magenta">{{atk.damage}}</span>
+          <a class="sr-chip" data-action="roll-attack" data-item="{{atk.id}}" data-tohit="{{atk.toHit}}" data-damage="{{atk.damage}}" data-name="{{atk.name}}" title="Rolagem de ataque">{{atk.toHit}} atk</a>
+          <a class="sr-chip sr-chip-magenta" data-action="roll-damage" data-item="{{atk.id}}" data-damage="{{atk.damage}}" data-name="{{atk.name}}" title="Rolagem de dano">{{atk.damage}}</a>
         </div>
       {{/each}}
     </div>

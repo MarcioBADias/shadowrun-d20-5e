@@ -130,16 +130,23 @@ export class RunnerSheet extends ActorSheet {
       };
     });
 
-    const customSkills = (sys.custom_skills ?? []).map((skill, index) => ({
-      id: skill.slug || `custom-${index}`,
-      name: skill.name,
-      source: (skill.attr || "Des").slice(0, 3).toUpperCase(),
-      attrShort: (skill.attr || "Des").slice(0, 3).toUpperCase(),
-      trained: false,
-      expertise: false,
-      bonus: 2,
-      custom: true,
-    }));
+    const customSkills = (sys.custom_skills ?? []).map((skill, index) => {
+      const skillId = skill.slug || `custom-${index}`;
+      const trained = trainedSkills.has(skillId);
+      const expertise = expertiseSkills.has(skillId);
+      const bonus =
+        2 + (trained ? proficiency : 0) + (expertise ? proficiency : 0);
+      return {
+        id: skillId,
+        name: skill.name,
+        source: (skill.attr || "Des").slice(0, 3).toUpperCase(),
+        attrShort: (skill.attr || "Des").slice(0, 3).toUpperCase(),
+        trained,
+        expertise,
+        bonus,
+        custom: true,
+      };
+    });
 
     const inventory = (sys.inventory ?? []).map((item) => ({
       ...item,
@@ -217,6 +224,10 @@ export class RunnerSheet extends ActorSheet {
   activateListeners(html) {
     super.activateListeners(html);
 
+    html.on("click", "a[data-action]", (event) => {
+      event.preventDefault();
+    });
+
     html.on("click", ".sr-accordion-head", (event) => {
       const header = event.currentTarget.closest(".sr-accordion");
       if (header) header.classList.toggle("is-open");
@@ -266,21 +277,63 @@ export class RunnerSheet extends ActorSheet {
       await this.actor.update({ "system.inventory": inventory });
     });
 
-    html.on("click", "[data-action='roll-skill']", (event) => {
-      const skillId = event.currentTarget.dataset.skill;
-      const bonus = this.getSkillBonus(skillId);
-      new Roll(`1d20 + ${bonus}`).toMessage({
+    html.on("click", "[data-action='roll-attribute']", (event) => {
+      const attr = event.currentTarget.dataset.attr;
+      const mod = Number(event.currentTarget.dataset.mod ?? 0);
+      const formula = `1d20 ${mod >= 0 ? "+" : "-"} ${Math.abs(mod)}`;
+      new Roll(formula).toMessage({
         speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+        flavor: `Teste de ${attr}`,
       });
     });
 
-    html.on("click", "[data-action='roll-save']", (event) => {
+    html.on("click", "[data-action='roll-attribute-save']", (event) => {
       const attr = event.currentTarget.dataset.attr;
-      const base = Number(this.actor.system[attr] ?? 10);
-      const mod = Math.floor((base - 10) / 2);
-      const total = mod + Number(this.actor.system.proficiency ?? 2);
-      new Roll(`1d20 + ${total}`).toMessage({
+      const save = Number(event.currentTarget.dataset.save ?? 0);
+      const formula = `1d20 ${save >= 0 ? "+" : "-"} ${Math.abs(save)}`;
+      new Roll(formula).toMessage({
         speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+        flavor: `Teste de resistência de ${attr}`,
+      });
+    });
+
+    html.on("click", "[data-action='roll-initiative']", (event) => {
+      const initType = event.currentTarget.dataset.init;
+      const bonus = Number(this.actor.system.initiative?.[initType] ?? 0);
+      const label =
+        {
+          physical: "Física",
+          astral: "Astral",
+          matrix: "Matrix",
+        }[initType] ?? initType;
+      const formula = `1d20 ${bonus >= 0 ? "+" : "-"} ${Math.abs(bonus)}`;
+      new Roll(formula).toMessage({
+        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+        flavor: `Iniciativa ${label}`,
+      });
+    });
+
+    html.on("click", "[data-action='roll-attack']", (event) => {
+      const itemId = event.currentTarget.dataset.item;
+      const item =
+        (this.actor.system.inventory ?? []).find((i) => i.id === itemId) || {};
+      const toHit = item.toHit ?? item.attackBonus ?? "+0";
+      const formula = `1d20 ${toHit}`;
+      new Roll(formula).toMessage({
+        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+        flavor: `Teste de ataque: ${item.name || "Arma"}`,
+      });
+    });
+
+    html.on("click", "[data-action='roll-damage']", (event) => {
+      const itemId = event.currentTarget.dataset.item;
+      const item =
+        (this.actor.system.inventory ?? []).find((i) => i.id === itemId) || {};
+      const damage = item.damage || item.note || "1d6";
+      const formula = damage.trim() || "1d6";
+      new Roll(formula).toMessage({
+        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+        flavor: `Dano de ${item.name || "Arma"}`,
       });
     });
   }
