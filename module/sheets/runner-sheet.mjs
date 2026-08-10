@@ -277,6 +277,20 @@ export class RunnerSheet extends ActorSheet {
       await this.actor.update({ "system.inventory": inventory });
     });
 
+    html.on("click", "[data-action='import-json']", async () => {
+      const input = document.createElement("input");
+      input.type = "file";
+      input.accept = ".json,application/json";
+      input.style.display = "none";
+      input.addEventListener("change", async (event) => {
+        const file = event.target.files?.[0];
+        if (file) await this._handleImportedJSON(file);
+      });
+      document.body.appendChild(input);
+      input.click();
+      input.remove();
+    });
+
     html.on("click", "[data-action='roll-attribute']", (event) => {
       const attr = event.currentTarget.dataset.attr;
       const mod = Number(event.currentTarget.dataset.mod ?? 0);
@@ -336,6 +350,115 @@ export class RunnerSheet extends ActorSheet {
         flavor: `Dano de ${item.name || "Arma"}`,
       });
     });
+  }
+
+  async _handleImportedJSON(file) {
+    const text = await new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = () => reject(reader.error);
+      reader.readAsText(file);
+    });
+
+    let data;
+    try {
+      data = JSON.parse(text);
+    } catch (error) {
+      ui.notifications.error(
+        "JSON inválido. Verifique o arquivo e tente novamente.",
+      );
+      return;
+    }
+
+    const imported = data.actor ?? data.data ?? data;
+    if (!imported || typeof imported !== "object") {
+      ui.notifications.error(
+        "O arquivo JSON não contém dados de ator válidos.",
+      );
+      return;
+    }
+
+    if (imported.type && imported.type !== this.actor.type) {
+      ui.notifications.warn(
+        "O tipo do ator importado é diferente do ator atual. A importação foi cancelada.",
+      );
+      return;
+    }
+
+    try {
+      await this._overwriteActorWithImportedData(imported);
+      ui.notifications.info(
+        "Importação concluída. A ficha foi atualizada com os dados do JSON.",
+      );
+      this.render();
+    } catch (error) {
+      console.error(error);
+      ui.notifications.error(
+        "Falha ao importar JSON. Veja o console para detalhes.",
+      );
+    }
+  }
+
+  async _overwriteActorWithImportedData(imported) {
+    const updateData = {};
+    if (imported.name) updateData.name = imported.name;
+    if (imported.img) updateData.img = imported.img;
+    if (imported.avatar_url) updateData.img = imported.avatar_url;
+    if (imported.data?.avatar_url) updateData.img = imported.data.avatar_url;
+    if (imported.token) updateData.token = imported.token;
+    if (imported.prototypeToken)
+      updateData.prototypeToken = imported.prototypeToken;
+    if (imported.flags) updateData.flags = imported.flags;
+    if (imported.system) updateData.system = duplicate(imported.system);
+
+    if (!foundry.utils.isEmpty(updateData)) {
+      await this.actor.update(updateData);
+    }
+
+    if (Array.isArray(imported.items)) {
+      const currentItemIds = this.actor.items.map((item) => item.id);
+      if (currentItemIds.length) {
+        await this.actor.deleteEmbeddedDocuments("Item", currentItemIds);
+      }
+      const itemsToCreate = imported.items.map((item) => {
+        const itemData = duplicate(
+          item instanceof foundry.abstract.Document ? item.toObject() : item,
+        );
+        itemData._id ||= randomID();
+        return itemData;
+      });
+      if (itemsToCreate.length) {
+        await this.actor.createEmbeddedDocuments("Item", itemsToCreate, {
+          keepId: true,
+        });
+      }
+    }
+
+    if (Array.isArray(imported.effects)) {
+      const currentEffectIds = this.actor.effects.map((effect) => effect.id);
+      if (currentEffectIds.length) {
+        await this.actor.deleteEmbeddedDocuments(
+          "ActiveEffect",
+          currentEffectIds,
+        );
+      }
+      const effectsToCreate = imported.effects.map((effect) => {
+        const effectData = duplicate(
+          effect instanceof foundry.abstract.Document
+            ? effect.toObject()
+            : effect,
+        );
+        effectData._id ||= randomID();
+        return effectData;
+      });
+      if (effectsToCreate.length) {
+        await this.actor.createEmbeddedDocuments(
+          "ActiveEffect",
+          effectsToCreate,
+          { keepId: true },
+        );
+      }
+    }
   }
 
   getSkillBonus(skillId) {

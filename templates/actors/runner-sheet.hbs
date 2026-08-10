@@ -37,6 +37,11 @@
     </div>
 
     <div class="sr-header-actions">
+      {{#if editable}}
+        <a class="sr-btn sr-btn-outline" data-action="import-json" title="Importar JSON">
+          <i class="fas fa-file-import"></i> Importar
+        </a>
+      {{/if}}
       <a class="sr-btn sr-btn-ghost" data-action="toggle-dead" title="Morto em ação">
         <i class="fas fa-skull"></i>
       </a>
